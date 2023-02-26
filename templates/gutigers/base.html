@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load rango_template_tags %}
+
+<html>
+	<head>
+		<title>
+			GuTigers-
+			{% block title_block %}
+				Home Page
+			{% endblock %}
+		</title>
+	</head>
+	<body>
+		<div>
+			{% block body_block %}
+			{% endblock %}
+		</div>
+		<div>
+			{% block sidebar_block %}
+			{% endblock %}
+		</div>
+		<hr />
+		<div>
+		</div>
+	</body>
+</html>
