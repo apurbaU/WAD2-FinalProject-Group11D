@@ -1,10 +1,18 @@
 {% extends 'gutigers/base.html' %}
 
-
 {% block title_block %}
-	Team
+	Team{% if team %} - {{team.name}}{% endif %}
 {% endblock %}
 
 {% block body_block %}
-	
+	{% if team %}
+		<img src="{{MEDIA_URL}}{{team.icon}}" alt="{{team.name}}'s icon"/>
+	{% endif %}
+	<p>
+		{% if team %}
+			{{team.bio}}
+		{% else %}
+			The specified team was not found.
+		{% endif %}
+	</p>
 {% endblock %}

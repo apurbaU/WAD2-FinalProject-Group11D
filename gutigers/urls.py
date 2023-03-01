@@ -1,11 +1,11 @@
-from django.urls import path 
+from django.urls import path
 from gutigers import views
 
 app_name = 'gutigers'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('team/', views.team, name= 'team'),
+    path('team/<slug:team_name_slug>/', views.team_detail, name= 'team_detail'),
     path('contact/', views.contact, name= 'contact'),
     path('player/', views.player, name= 'player'),
     path('post/', views.post, name= 'post'),

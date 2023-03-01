@@ -1,12 +1,15 @@
 <!DOCTYPE html>
+{% load staticfiles %}
+
 <html>
 	<head>
 		<title>
-			GuTigers-
+			GuTigers -
 			{% block title_block %}
 				Home Page
 			{% endblock %}
 		</title>
+		<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}"
 	</head>
 	<body>
 		<div>
