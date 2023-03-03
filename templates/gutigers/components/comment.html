@@ -1,0 +1,31 @@
+{% load staticfiles %}
+
+{% if base or comment.children|length == 0 %}
+  <article style="background-color: yellow">
+    {% with author=comment.author faction=comment.author.faction %}
+      <a href="{% url 'gutigers:user' comment.author.url_slug %}">
+        <h3 class="comment-author-name" style="display: inline">{{author.name}}</h3>
+      </a>
+      <span class="user-faction-background-{{faction.team.url_slug}}">
+        {{faction.team.name}} {{faction.type}}
+      </span>
+    {% endwith %}
+    <div>{{comment.rating}} points</div>
+    <p>{{comment.body}}</p>
+    <div class="comment-options">
+      <img src="{% static 'images/comment/arrow_up.png' %}" alt="Vote up icon"/>
+      <span>vote</span>
+      <img src="{% static 'images/comment/arrow_up.png' %}" alt="Vote down icon"/>
+      <img src="{% static 'images/comment/reply.png' %}" alt="Reply icon"/>
+    </div>
+  </article>
+{% else %}
+  <details class="comment-parent">
+    <summary>{% include 'gutigers/components/comment.html' with base=True %}</summary>
+    <ul>
+      {% for child_comment in comment.children %}
+        <li>{% include 'gutigers/components/comment.html' with comment=child_comment %}</li>
+      {% endfor %}
+    </ul>
+  </details>
+{% endif %}

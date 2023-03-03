@@ -1,0 +1,8 @@
+.comment-parent { white-space: nowrap; }
+.comment-parent > ul {
+    margin-bottom: 0;
+    padding-left: 1em;
+    border-left: 0.3em solid red;
+}
+.comment-parent > summary, .comment-parent > ul > li { display: block; }
+.comment-parent ul li { list-style-type: none; }
