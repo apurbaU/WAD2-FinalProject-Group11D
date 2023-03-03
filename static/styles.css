@@ -1,8 +1,13 @@
+.comment-options > img {
+    width: 1.5em;
+    height: 1.5em;
+}
+
 .comment-parent { white-space: nowrap; }
 .comment-parent > ul {
     margin-bottom: 0;
     padding-left: 1em;
-    border-left: 0.3em solid red;
+    border-left: 3px dotted dimgray;
 }
 .comment-parent > summary, .comment-parent > ul > li { display: block; }
 .comment-parent ul li { list-style-type: none; }

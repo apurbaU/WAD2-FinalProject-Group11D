@@ -15,7 +15,5 @@
 			The specified team was not found.
 		{% endif %}
 	</p>
-	{% for comment in comments %}
-		{% include 'gutigers/components/comment.html' with base=False %}
-	{% endfor %}
+	{% include 'gutigers/components/comment-section.html' %}
 {% endblock %}

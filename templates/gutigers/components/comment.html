@@ -1,21 +1,23 @@
 {% load staticfiles %}
 
 {% if base or comment.children|length == 0 %}
-  <article style="background-color: yellow">
-    {% with author=comment.author faction=comment.author.faction %}
-      <a href="{% url 'gutigers:user' comment.author.url_slug %}">
-        <h3 class="comment-author-name" style="display: inline">{{author.name}}</h3>
-      </a>
-      <span class="user-faction-background-{{faction.team.url_slug}}">
-        {{faction.team.name}} {{faction.type}}
-      </span>
-    {% endwith %}
-    <div>{{comment.rating}} points</div>
-    <p>{{comment.body}}</p>
+  <article class="card p-2 my-1">
+    <div class="card-title">
+      {% with author=comment.author faction=comment.author.faction %}
+        <a href="{% url 'gutigers:user' comment.author.url_slug %}">
+          <h5 style="display: inline">{{author.name}}</h5>
+        </a>
+        <span class="badge bg-secondary ml-2">
+          {{faction.team.name}} {{faction.type}}
+        </span>
+      {% endwith %}
+      <span style="color: {{comment.rating_color}}">({{comment.rating}})</span>
+    </div>
+    <p class="card-body p-0">{{comment.body}}</p>
     <div class="comment-options">
       <img src="{% static 'images/comment/arrow_up.png' %}" alt="Vote up icon"/>
-      <span>vote</span>
-      <img src="{% static 'images/comment/arrow_up.png' %}" alt="Vote down icon"/>
+      <img src="{% static 'images/comment/arrow_up.png' %}" alt="Vote down icon"
+          style="transform: rotate(180deg)"/>
       <img src="{% static 'images/comment/reply.png' %}" alt="Reply icon"/>
     </div>
   </article>
