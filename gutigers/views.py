@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from gutigers.models import Team
+from gutigers.helpers.comment import CommentView
+from gutigers.models import Comment, Team
 
 def index(request):
     return render(request, 'gutigers/index.html')
 
 def team_detail(request, *, team_name_slug):
-    context_dict = {}
+    context_dict = {'comments': list(map(CommentView, Comment.objects.filter(replies_to=None)))}
     try: context_dict['team'] = Team.objects.get(url_slug=team_name_slug)
     except Team.DoesNotExist: context_dict['team'] = None
     return render(request, 'gutigers/team.html', context=context_dict)
@@ -29,5 +30,5 @@ def register(request):
 def result(request):
     return render(request, 'gutigers/result.html')
 
-def user(request):
+def user(request, *, username_slug):
     return render(request, 'gutigers/user.html')

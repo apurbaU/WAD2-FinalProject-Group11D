@@ -1,0 +1,8 @@
+<section class="card p-1">
+	<h3 class="card-title">Comments</h3>
+	<div class="card-body">
+		{% for comment in comments %}
+			{% include 'gutigers/components/comment.html' with base=False %}
+		{% endfor %}
+	</div>
+</section>
