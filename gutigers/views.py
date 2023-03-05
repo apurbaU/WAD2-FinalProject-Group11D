@@ -40,6 +40,8 @@ def team_detail(request, *, team_name_slug):
     context_dict = {'comments': list(map(CommentView, Comment.objects.filter(replies_to=None)))}
     try: context_dict['team'] = Team.objects.get(url_slug=team_name_slug)
     except Team.DoesNotExist: redirect(reverse('gutigers:404'))
+    context_dict['supporter_count'] = (UserProfile.objects
+                                       .filter(support_team=context_dict['team']).count())
     return render(request, 'gutigers/team.html', context=context_dict)
 
 def contact(request):
