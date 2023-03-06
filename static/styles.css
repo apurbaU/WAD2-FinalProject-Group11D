@@ -1,4 +1,5 @@
-.comment-options > img {
+.comment-expand-btn { font: 0.8em monospace; }
+.comment-options img {
     width: 1.5em;
     height: 1.5em;
 }

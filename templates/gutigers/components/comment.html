@@ -1,13 +1,17 @@
 {% load staticfiles %}
 
 {% if base or comment.children|length == 0 %}
-  <article class="card p-2 my-1">
+  <article id="comment-main-{{comment.comment_id}}" class="card p-2 my-1"
+      onclick="return false;" style="cursor: default;">
     <div class="card-title">
       {% with author=comment.author faction=comment.author.faction %}
-        <a href="{% url 'gutigers:user' comment.author.url_slug %}">
-          <h5 style="display: inline">{{author.name}}</h5>
+        <a href="{% url 'gutigers:user' comment.author.url_slug %}"
+            style="text-decoration: none;">
+          <img src="{{MEDIA_URL}}{{comment.author.avatar}}" alt="{{author.name}}'s avatar"
+              class="h5" style="width: 1em; height: 1em;"/>
+          <h5 class="d-inline mx-2">{{author.name}}</h5>
         </a>
-        <span class="badge bg-secondary ml-2">
+        <span class="badge rounded-pill text-bg-info ml-2">
           {{faction.team.name}} {{faction.type}}
         </span>
       {% endwith %}
@@ -18,13 +22,24 @@
       <img src="{% static 'images/comment/arrow_up.png' %}" alt="Vote up icon"/>
       <img src="{% static 'images/comment/arrow_up.png' %}" alt="Vote down icon"
           style="transform: rotate(180deg)"/>
-      <img src="{% static 'images/comment/reply.png' %}" alt="Reply icon"/>
+      <a href="#" onclick="toggleReplyForm('{{comment.comment_id}}',
+          '{% url 'gutigers:comment_reply' comment.comment_id %}');" style="text-decoration: none;">
+        <img id="reply-btn-{{comment.comment_id}}" src="{% static 'images/comment/reply.png' %}"
+            alt="Reply icon"/>
+      </a>
+      {% if comment.children|length != 0 %}
+        <a id="expand-btn-{{comment.comment_id}}" href="#" onclick="expandComment(
+            '{{comment.comment_id}}', null);" class="comment-expand-btn">
+            Show replies
+        </a>
+      {% endif %}
     </div>
+    <div id="reply-{{comment.comment_id}}"></div>
   </article>
 {% else %}
-  <details class="comment-parent">
+  <details id="comment-expandable-{{comment.comment_id}}" class="comment-parent">
     <summary>{% include 'gutigers/components/comment.html' with base=True %}</summary>
-    <ul>
+    <ul id="reply-list-{{comment.comment_id}}">
       {% for child_comment in comment.children %}
         <li>{% include 'gutigers/components/comment.html' with comment=child_comment %}</li>
       {% endfor %}
