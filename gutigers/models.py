@@ -31,7 +31,7 @@ class UserProfile(models.Model):
     url_slug = models.SlugField(primary_key=True, unique=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     display_name = models.CharField(max_length=128)
-    avatar = models.ImageField(upload_to='profile_images', null=True)
+    avatar = models.ImageField(upload_to='profile_images', null=True, blank=True)
     bio = models.CharField(max_length=1024)
 
     support_team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, related_name='+')
@@ -42,7 +42,7 @@ class UserProfile(models.Model):
         super(UserProfile, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        return self.display_name
 
 class Manager(models.Model):
     user = models.OneToOneField(UserProfile, on_delete=models.CASCADE)

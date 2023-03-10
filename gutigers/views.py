@@ -2,10 +2,12 @@ from http import HTTPStatus
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from gutigers.forms import CommentForm
+from gutigers.forms import CommentForm, UserForm, UserProfileForm
 from gutigers.helpers.comment import CommentView
 from gutigers.models import Comment, Team, User, UserProfile
 from django.urls import reverse
+from django.contrib.auth import authenticate, login as auth_login
+import sys
 
 def index(request):
     return render(request, 'gutigers/index.html')
@@ -54,10 +56,57 @@ def post(request):
     return render(request, 'gutigers/post.html')
 
 def login(request):
-    return render(request, 'gutigers/login.html')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        user = authenticate(username=username, password=password)
+        
+        if user:
+            if user.is_active:
+                auth_login(request, user)
+                return redirect(reverse('gutigers:index'))
+            else:
+                return HttpResponse("Your account is disabled.")
+        else:
+            print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, 'gutigers/login.html')
 
 def register(request):
-    return render(request, 'gutigers/register.html')
+    registered = False
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
+        print(profile_form.is_valid())
+        
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            
+            user.set_password(user.password)
+            user.save()
+            
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            
+            #if 'avatar' in request.FILES:
+             #   profile.avatar = request.FILES['avatar']
+                
+               
+            #print(request.FILES, file=sys.stderr)
+            profile.save()
+            registered = True
+        else:
+            print(user_form.errors, profile_form.errors)
+    else:
+        user_form = UserForm()
+        profile_form = UserProfileForm()
+    return render(request, 
+                    'gutigers/register.html', 
+                    context = {'user_form': user_form, 
+                                'profile_form': profile_form, 
+                                'registered': registered})
 
 def result(request):
     return render(request, 'gutigers/result.html')
