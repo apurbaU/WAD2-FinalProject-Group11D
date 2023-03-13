@@ -53,13 +53,30 @@ class Manager(models.Model):
     def __str__(self):
         return self.user.name
 
+class Post(models.Model):
+    title = models.CharField(max_length=1024)
+    body = models.CharField(max_length=16384)
+    post_date = models.DateField()
+
+    def __str__(self):
+        return self.title
+
 class Comment(models.Model):
     body = models.CharField(max_length=4096)
     rating = models.BigIntegerField(default=0)
 
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    about_match = models.ForeignKey(Match, on_delete=models.CASCADE, null=True)
+    about_post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
     replies_to = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f'{self.pk} by {self.user}'
+
+class CommentVote(models.Model):
+    positive = models.BooleanField()
+
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{"+1" if self.positive else "-1"} from {self.user} on {self.comment}'

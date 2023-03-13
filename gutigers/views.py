@@ -20,17 +20,17 @@ def comment(request, *, comment_id):
     except Comment.DoesNotExist: return redirect(reverse('gutigers:404'))
     return render(request, 'gutigers/components/comment.html', context=context_dict)
 
-# FIXME: remove once login is complete, along with user retrieval
-#@login_required
+@login_required
 def comment_reply(request, *, comment_id):
     form = CommentForm()
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.user = UserProfile.objects.get(user=User.objects.get(pk=1))
+            comment.user = UserProfile.objects.get(user=request.user)
             try: comment.replies_to = Comment.objects.get(pk=comment_id)
             except Comment.DoesNotExist: return HttpResponse(status=HTTPStatus.NOT_FOUND)
+            comment.about_post = comment.replies_to.about_post
             comment.save()
             new_url = reverse('gutigers:comment', kwargs={'comment_id': comment.pk})
             return HttpResponse(f'<html><body>{new_url}</body></html>')
@@ -39,7 +39,8 @@ def comment_reply(request, *, comment_id):
     return render(request, 'gutigers/components/reply.html', context=context_dict)
 
 def team_detail(request, *, team_name_slug):
-    context_dict = {'comments': list(map(CommentView, Comment.objects.filter(replies_to=None)))}
+    context_dict = {'comments': list(map(CommentView,
+                    Comment.objects.filter(about_post=None, replies_to=None)))}
     try: context_dict['team'] = Team.objects.get(url_slug=team_name_slug)
     except Team.DoesNotExist: redirect(reverse('gutigers:404'))
     context_dict['supporter_count'] = (UserProfile.objects
