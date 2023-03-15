@@ -2,7 +2,7 @@ from http import HTTPStatus
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from gutigers.forms import CommentForm, UserForm, UserProfileForm
+from gutigers.forms import CommentForm, MatchForm, UserForm, UserProfileForm
 from gutigers.helpers.comment import CommentView
 from gutigers.models import Comment, Team, User, UserProfile
 from django.urls import reverse
@@ -114,3 +114,40 @@ def result(request):
 
 def user(request, *, username_slug):
     return render(request, 'gutigers/user.html')
+
+def settings(request):
+   
+    form = MatchForm()
+
+    if request.method == 'POST':
+        form = MatchForm(request.POST)
+
+        if form.is_valid():
+
+            form.save(commit=True)
+
+            return redirect('/gutigers/')
+        else:
+
+            print(form.errors)
+
+        form = MatchForm()
+
+    
+    form2= UserChangeForm()
+
+    if request.method == 'POST':
+        form2 = UserChangeForm(request.POST)
+
+        if form2.is_valid():
+
+            form.save(commit=True)
+
+            return redirect('/gutigers/')
+        else:
+
+            print(form2.errors)
+
+    context_dict={'form2':form2}
+    return render(request, 'gutigers/settings.html', context=context_dict)
+

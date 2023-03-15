@@ -1,7 +1,7 @@
-from django import forms
-from gutigers.models import Comment, UserProfile
+from django import form
+from gutigers.models import Comment, UserProfile, Team,Match
 from django.contrib.auth.models import User
-from gutigers.models import Team
+
 
 class CommentForm(forms.ModelForm):
     body = forms.CharField(widget=forms.Textarea(attrs={'rows': '3'}), help_text='Reply:')
@@ -23,3 +23,31 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('avatar', 'display_name', 'team_supported')
+
+
+class MatchForm(forms.ModelForm):
+
+	time= forms.DateField(help_text="Enter the Date of the game (format dd-mm-yyyy)")
+	homeTeam = forms.CharField(max_length=128,
+			help_text="Please enter the Home Teams name.")
+	awayTeam = forms.CharField(max_length=128,
+			help_text="Please enter the Away Teams name.")
+	homeScore = forms.IntegerField(help_text="Please enter the Home Score.")
+	awayScore = forms.IntegerField(help_text="Please enter the Away Score.")
+
+	class Meta:
+
+		model = Match
+		fields = ('time','homeTeam','awayTeam','homeScore','awayScore',)
+
+class UserChangeForm(forms.ModelForm):
+
+	display_name = forms.CharField(max_length=128,label='Display Name',help_text="Enter new display name")
+	avatar = forms.ImageField()
+	bio = forms.CharField(max_length=128, label="Bio",help_text="Enter new bio")
+
+	class Meta:
+
+		model = Match
+		exclude=('url_slug','user',)
+
