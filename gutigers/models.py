@@ -17,7 +17,7 @@ class Team(models.Model):
 
 class Match(models.Model):
     time = models.DateTimeField()
-    venue = models.CharField(max_length=128)
+    
     home_score = models.PositiveSmallIntegerField(null=True)
     away_score = models.PositiveSmallIntegerField(null=True)
 
