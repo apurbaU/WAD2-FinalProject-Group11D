@@ -2,14 +2,14 @@
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'gutigers_project.settings')
 
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 import django
 from django.core.files.images import ImageFile
 from django.template.defaultfilters import slugify
 
 django.setup()
 from django.contrib.auth.models import User
-from gutigers.models import Comment, Manager, Match, Team, UserProfile
+from gutigers.models import Comment, Manager, Match, Post, Team, UserProfile
 
 def populate():
     t1 = populate_team({'name': 'GUTigers', 'icon': 'team_profile_images/GUTigers.jpg', 'bio': 'Bio of GUTigers'})
@@ -21,8 +21,10 @@ def populate():
     up1 = populate_user_profile({'name': 'johnny', 'avatar': 'profile_images/MockUser.png', 'bio': 'John\'s bio', 'support': t1}, u1)
     up2 = populate_user_profile({'name': 'manager', 'avatar': 'team_profile_images/GUTigers.jpg', 'bio': 'Connor\'s bio', 'work': t2}, u2)
     man1 = populate_manager('CEO', up2, [t1, t2])
-    c1 = populate_comment({'id': 1, 'body': 'Comment body 1', 'rating': 8627}, up2, m1, None)
-    c2 = populate_comment({'id': 2, 'body': 'Comment body 2'}, up1, m1, c1)
+    p1 = populate_post(1, "Post title", "Post body", date.today())
+    c1 = populate_comment({'id': 1, 'body': 'Comment body 1', 'rating': 8627}, up2, p1, None)
+    c2 = populate_comment({'id': 2, 'body': 'Comment body 2'}, up1, p1, c1)
+    c3 = populate_comment({'id': 3, 'body': 'Comment body 3'}, up2, None, None)
 
 def populate_team(team_spec):
     team = Team.objects.get_or_create(url_slug=slugify(team_spec['name']))[0]
@@ -63,13 +65,22 @@ def populate_manager(position, user, teams):
     manager.owned_teams.add(*teams)
     return manager
 
+def populate_post(post_id, title, body, post_date):
+    defaults = {'post_date': date.today()}
+    post = Post.objects.get_or_create(pk=post_id, defaults=defaults)[0]
+    post.title = title
+    post.body = body
+    post.post_date = post_date
+    post.save()
+    return post
+
 def populate_comment(comment_spec, user, about, replies_to):
     defaults = {'user': user}
     comment = Comment.objects.get_or_create(pk=comment_spec['id'], defaults=defaults)[0]
     comment.body = comment_spec['body']
     comment.rating = comment_spec.setdefault('rating', 0)
     comment.user = user
-    comment.about_match = about
+    comment.about_post = about
     comment.replies_to = replies_to
     comment.save()
     return comment

@@ -11,7 +11,6 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('body', 'rating')
       
-TEAM_CHOICES = list(map(lambda team: (team.pk, team.name), Team.objects.all()))
         
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -20,7 +19,7 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'password')
 
 class UserProfileForm(forms.ModelForm):
-    team_supported = forms.MultipleChoiceField(choices = TEAM_CHOICES)
+    team_supported = forms.ModelChoiceField(queryset=Team.objects.all().order_by('name'))
     class Meta:
         model = UserProfile
         fields = ('avatar', 'display_name', 'team_supported')
