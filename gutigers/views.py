@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from gutigers.forms import CommentForm, UserForm, UserProfileForm
 from gutigers.helpers.comment import CommentView
-from gutigers.models import Comment, Team, User, UserProfile
+from gutigers.models import Comment, Post, Team, User, UserProfile
 from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login
 import sys
@@ -53,8 +53,10 @@ def contact(request):
 def player(request):
     return render(request, 'gutigers/player.html')
 
-def post(request):
-    return render(request, 'gutigers/post.html')
+def post(request, *, post_id):
+    try: context_dict = {'post': Post.objects.get(pk=post_id)}
+    except Post.DoesNotExist: return redirect(reverse('gutigers:404'))
+    return render(request, 'gutigers/post.html', context=context_dict)
 
 def login(request):
     if request.method == 'POST':
