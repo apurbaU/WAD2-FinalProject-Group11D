@@ -12,7 +12,7 @@ import sys
 def index(request):
     return render(request, 'gutigers/index.html')
 
-def not_found(request):
+def not_found(request, exception=None):
     return render(request, 'gutigers/404.html')
 
 def comment(request, *, comment_id):
@@ -42,7 +42,7 @@ def team_detail(request, *, team_name_slug):
     context_dict = {'comments': list(map(CommentView,
                     Comment.objects.filter(about_post=None, replies_to=None)))}
     try: context_dict['team'] = Team.objects.get(url_slug=team_name_slug)
-    except Team.DoesNotExist: redirect(reverse('gutigers:404'))
+    except Team.DoesNotExist: return redirect(reverse('gutigers:404'))
     context_dict['supporter_count'] = (UserProfile.objects
                                        .filter(support_team=context_dict['team']).count())
     return render(request, 'gutigers/team.html', context=context_dict)
@@ -62,9 +62,9 @@ def login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        
+
         user = authenticate(username=username, password=password)
-        
+
         if user:
             if user.is_active:
                 auth_login(request, user)
@@ -83,20 +83,21 @@ def register(request):
         user_form = UserForm(request.POST)
         profile_form = UserProfileForm(request.POST)
         print(profile_form.is_valid())
-        
+
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
-            
+
             user.set_password(user.password)
             user.save()
-            
+
             profile = profile_form.save(commit=False)
             profile.user = user
-            
+
+            # FIXME: avatar
             #if 'avatar' in request.FILES:
              #   profile.avatar = request.FILES['avatar']
-                
-               
+
+
             #print(request.FILES, file=sys.stderr)
             profile.save()
             registered = True
@@ -105,10 +106,10 @@ def register(request):
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
-    return render(request, 
-                    'gutigers/register.html', 
-                    context = {'user_form': user_form, 
-                                'profile_form': profile_form, 
+    return render(request,
+                    'gutigers/register.html',
+                    context = {'user_form': user_form,
+                                'profile_form': profile_form,
                                 'registered': registered})
 
 def result(request):
