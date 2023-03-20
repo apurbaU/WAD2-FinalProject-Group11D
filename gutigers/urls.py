@@ -12,6 +12,7 @@ urlpatterns = [
     path('player/', views.player, name='player'),
     path('post/<int:post_id>/', views.post, name='post'),
     path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
     path('register/', views.register, name='register'),
     path('result/', views.result, name='result'),
     path('user/<slug:username_slug>/', views.user, name='user'),

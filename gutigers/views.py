@@ -5,7 +5,7 @@ from gutigers.forms import UserForm, UserProfileForm
 from gutigers.helpers.comment import CommentView
 from gutigers.models import Comment, Manager, Post, Team, UserProfile
 from django.urls import reverse
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 def index(request):
     return render(request, 'gutigers/index.html')
@@ -54,6 +54,11 @@ def login(request):
     else:
         return render(request, 'gutigers/login.html')
 
+@login_required
+def logout(request):
+    auth_logout(request)
+    return redirect(reverse('gutigers:index'))
+
 def register(request):
     registered = False
     if request.method == 'POST':
@@ -70,12 +75,10 @@ def register(request):
             profile = profile_form.save(commit=False)
             profile.user = user
 
-            # FIXME: avatar
-            #if 'avatar' in request.FILES:
-             #   profile.avatar = request.FILES['avatar']
+            if 'avatar' in request.FILES:
+                profile.avatar = request.FILES['avatar']
+            else: profile.avatar = 'profile_images/placeholder.png'
 
-
-            #print(request.FILES, file=sys.stderr)
             profile.save()
             registered = True
         else:

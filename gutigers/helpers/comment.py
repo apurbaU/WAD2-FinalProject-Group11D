@@ -22,14 +22,14 @@ class UserView:
     def faction(self):
         if Manager.objects.filter(user=self.user_orm).exists():
             manager = Manager.objects.get(user=self.user_orm)
-            return Faction(manager.owned_teams.first(), manager.position)
+            return Faction(manager.owned_teams.first().name, manager.position)
         if self.user_orm.work_team is not None:
-            return Faction(self.user_orm.work_team, 'Member')
+            return Faction(self.user_orm.work_team.name, 'Member')
         if self.user_orm.support_team is not None:
-            return Faction(self.user_orm.support_team, 'Supporter')
-        return None
+            return Faction(self.user_orm.support_team.name, 'Supporter')
+        return Faction('Rogue', 'Agent')
 
 class Faction:
-    def __init__(self, team_orm: Team, type: str):
-        self.team = team_orm
+    def __init__(self, name: str, type: str):
+        self.name = name
         self.type = type

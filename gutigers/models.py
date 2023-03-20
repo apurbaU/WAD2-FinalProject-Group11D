@@ -51,7 +51,7 @@ class Manager(models.Model):
     owned_teams = models.ManyToManyField(Team)
 
     def __str__(self):
-        return self.user.name
+        return self.user.display_name
 
 class Post(models.Model):
     title = models.CharField(max_length=1024)
