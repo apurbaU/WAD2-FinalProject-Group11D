@@ -1,7 +1,6 @@
 <hr/>
 <iframe id="cancel-redirect-{{comment_id}}" name="cancel-redirect" class="d-none"></iframe>
-<form id="reply-form-{{comment_id}}" method="post" target="cancel-redirect"
-    action="{% url 'gutigers:comment_reply' comment_id %}">
+<form id="reply-form-{{comment_id}}" method="post" target="cancel-redirect" action="{{action_url}}">
   {% csrf_token %}
   {% for hidden in form.hidden_fields %}
     {{hidden}}
@@ -11,6 +10,6 @@
     {{field.help_text|linebreaks}}
     {{field}}
   {% endfor %}
-  <input type="submit" value="Send reply" class="d-block btn btn-success"
-      onclick="submitForm('{{comment_id}}', '{% url 'gutigers:comment' comment_id %}');"/>
+  <input type="submit" value="Send" class="d-block btn btn-success"
+      onclick="submitForm('{{comment_id}}', '{{comment_url}}');"/>
 </form>

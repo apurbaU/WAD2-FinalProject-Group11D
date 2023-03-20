@@ -1,4 +1,4 @@
-from gutigers.models import Comment, Team, UserProfile
+from gutigers.models import Comment, Manager, Team, UserProfile
 
 class CommentView:
     def __init__(self, comment_orm: Comment): self.comment_orm = comment_orm
@@ -20,6 +20,9 @@ class UserView:
     def avatar(self): return self.user_orm.avatar
     def name(self): return self.user_orm.display_name
     def faction(self):
+        if Manager.objects.filter(user=self.user_orm).exists():
+            manager = Manager.objects.get(user=self.user_orm)
+            return Faction(manager.owned_teams.first(), manager.position)
         if self.user_orm.work_team is not None:
             return Faction(self.user_orm.work_team, 'Member')
         if self.user_orm.support_team is not None:

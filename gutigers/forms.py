@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from gutigers.models import Team
 
 class CommentForm(forms.ModelForm):
-    body = forms.CharField(widget=forms.Textarea(attrs={'rows': '3'}), help_text='Reply:')
+    body = forms.CharField(widget=forms.Textarea(attrs={'rows': '3'}), help_text='I would like to say:')
     rating = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     class Meta:
         model = Comment

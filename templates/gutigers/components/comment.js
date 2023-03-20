@@ -18,6 +18,21 @@ function collapseReplyForm(commentId) {
 function submitForm(commentId, commentUrl) {
     const cancelRedirectFrame = document.getElementById('cancel-redirect-' + commentId);
     const replyForm = document.getElementById('reply-form-' + commentId);
+
+    if (commentId === 'new') {
+        cancelRedirectFrame.onload = function () {
+            const newUrl = cancelRedirectFrame.contentDocument.body.innerText;
+            collapseReplyForm('new');
+            request('GET', newUrl, function (response) {
+                if (response.status != 200) return;
+                document.getElementById('comment-section-container')
+                    .innerHTML += response.responseText;
+            }).send();
+        };
+        replyForm.submit();
+        return;
+    }
+
     cancelRedirectFrame.onload = function () {
         const newUrl = cancelRedirectFrame.contentDocument.body.innerText;
         collapseReplyForm(commentId);

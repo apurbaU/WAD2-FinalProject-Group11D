@@ -1,13 +1,11 @@
-from http import HTTPStatus
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from gutigers.forms import CommentForm, UserForm, UserProfileForm
+from gutigers.forms import UserForm, UserProfileForm
 from gutigers.helpers.comment import CommentView
-from gutigers.models import Comment, Post, Team, User, UserProfile
+from gutigers.models import Comment, Manager, Post, Team, UserProfile
 from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login
-import sys
 
 def index(request):
     return render(request, 'gutigers/index.html')
@@ -15,34 +13,13 @@ def index(request):
 def not_found(request, exception=None):
     return render(request, 'gutigers/404.html')
 
-def comment(request, *, comment_id):
-    try: context_dict = {'comment': CommentView(Comment.objects.get(pk=comment_id))}
-    except Comment.DoesNotExist: return redirect(reverse('gutigers:404'))
-    return render(request, 'gutigers/components/comment.html', context=context_dict)
-
-@login_required
-def comment_reply(request, *, comment_id):
-    form = CommentForm()
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.user = UserProfile.objects.get(user=request.user)
-            try: comment.replies_to = Comment.objects.get(pk=comment_id)
-            except Comment.DoesNotExist: return HttpResponse(status=HTTPStatus.NOT_FOUND)
-            comment.about_post = comment.replies_to.about_post
-            comment.save()
-            new_url = reverse('gutigers:comment', kwargs={'comment_id': comment.pk})
-            return HttpResponse(f'<html><body>{new_url}</body></html>')
-        else: print(form.errors)
-    context_dict = {'comment_id': comment_id, 'form': form}
-    return render(request, 'gutigers/components/reply.html', context=context_dict)
-
 def team_detail(request, *, team_name_slug):
-    context_dict = {'comments': list(map(CommentView,
+    context_dict = {'post_id': -1, 'comments': list(map(CommentView,
                     Comment.objects.filter(about_post=None, replies_to=None)))}
     try: context_dict['team'] = Team.objects.get(url_slug=team_name_slug)
     except Team.DoesNotExist: return redirect(reverse('gutigers:404'))
+    context_dict['new_right'] = (request.user.is_authenticated and
+        Manager.objects.filter(user=UserProfile.objects.get(user=request.user)).exists())
     context_dict['supporter_count'] = (UserProfile.objects
                                        .filter(support_team=context_dict['team']).count())
     return render(request, 'gutigers/team.html', context=context_dict)
