@@ -10,3 +10,5 @@ urlpatterns = [
     path('gutigers/', include('gutigers.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = views.not_found

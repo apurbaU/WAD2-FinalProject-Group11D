@@ -18,7 +18,7 @@ def populate():
     m2 = populate_match({'id': 2, 'time': datetime.now(timezone.utc) + timedelta(days=100), 'venue': 'Baseball field', 'h_score': 2, 'a_score': 1}, t2, t1)
     u1 = User.objects.get_or_create(username='john@example.org', password='Password1')[0]
     u2 = User.objects.get_or_create(username='connor@example.com', password='12345678')[0]
-    up1 = populate_user_profile({'name': 'johnny', 'avatar': 'profile_images/MockUser.png', 'bio': 'John\'s bio', 'support': t1}, u1)
+    up1 = populate_user_profile({'name': 'johnny', 'avatar': 'profile_images/placeholder.png', 'bio': 'John\'s bio', 'support': t1}, u1)
     up2 = populate_user_profile({'name': 'manager', 'avatar': 'team_profile_images/GUTigers.jpg', 'bio': 'Connor\'s bio', 'work': t2}, u2)
     man1 = populate_manager('CEO', up2, [t1, t2])
     p1 = populate_post(1, "Post title", "Post body", date.today())

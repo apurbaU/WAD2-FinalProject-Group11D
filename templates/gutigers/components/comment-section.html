@@ -1,9 +1,26 @@
+{% load staticfiles %}
+
 <section class="card p-1">
-	<h3 class="card-header">Comments</h3>
+	<div class="card-header">
+		<div class="comment-options">
+			<h3 class="d-inline">Comments</h3>
+			{% if new_right %}
+				<button onclick="toggleReplyForm('new', '{% url 'gutigers:comment_new' post_id %}');"
+						class="btn btn-primary" style="float: right;">
+					<img id="reply-btn-new" src="{% static 'images/comment/reply.png' %}"
+							alt="New comment icon" style="filter: invert(100%);"/>
+					New comment
+				</button>
+			{% endif %}
+		</div>
+		<div id="reply-new"></div>
+	</div>
 	<div class="card-body" style="height: 40rem; overflow: scroll;">
-		{% for comment in comments %}
-			{% include 'gutigers/components/comment.html' with base=False %}
-		{% endfor %}
+		<div id="comment-section-container">
+			{% for comment in comments %}
+				{% include 'gutigers/components/comment.html' with base=False %}
+			{% endfor %}
+		</div>
 		<hr/>
 		<footer class="text-center text-muted">You have reach the end of all comments!</footer>
 	</div>
