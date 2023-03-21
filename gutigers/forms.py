@@ -1,4 +1,4 @@
-from django import form
+from django import forms
 from gutigers.models import Comment, UserProfile, Team,Match
 from django.contrib.auth.models import User
 
@@ -19,35 +19,35 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'password')
 
 class UserProfileForm(forms.ModelForm):
-    team_supported = forms.ModelChoiceField(queryset=Team.objects.all().order_by('name'))
+    
     class Meta:
         model = UserProfile
-        fields = ('avatar', 'display_name', 'team_supported')
+        exclude=('url_slug','user')
+      
 
 
 class MatchForm(forms.ModelForm):
 
-	time= forms.DateField(help_text="Enter the Date of the game (format dd-mm-yyyy)")
-	homeTeam = forms.CharField(max_length=128,
-			help_text="Please enter the Home Teams name.")
-	awayTeam = forms.CharField(max_length=128,
-			help_text="Please enter the Away Teams name.")
-	homeScore = forms.IntegerField(help_text="Please enter the Home Score.")
-	awayScore = forms.IntegerField(help_text="Please enter the Away Score.")
+	time= forms.DateField(help_text="Date of the game (format dd-mm-yyyy)")
+	venue=forms.CharField(max_length=128, help_text="Enter Venue of game")
+	homeTeam = forms.ModelChoiceField(queryset=Team.objects.all().order_by('name'),
+			help_text="Home Teams")
+	awayTeam = forms.ModelChoiceField(queryset=Team.objects.all().order_by('name'),
+			help_text="Away Teams")
+	homeScore = forms.IntegerField(help_text="Home Score.")
+	awayScore = forms.IntegerField(help_text="Away Score.")
 
 	class Meta:
 
 		model = Match
-		fields = ('time','homeTeam','awayTeam','homeScore','awayScore',)
+		fields = ('time','venue','homeTeam','awayTeam','homeScore','awayScore',)
 
-class UserChangeForm(forms.ModelForm):
-
-	display_name = forms.CharField(max_length=128,label='Display Name',help_text="Enter new display name")
-	avatar = forms.ImageField()
-	bio = forms.CharField(max_length=128, label="Bio",help_text="Enter new bio")
-
+class ChangeForm(forms.ModelForm):
+	
+	
 	class Meta:
 
-		model = Match
-		exclude=('url_slug','user',)
-
+		model = UserProfile
+		exclude=('url_slug',)
+		
+		widgets={'user':forms.HiddenInput()}
