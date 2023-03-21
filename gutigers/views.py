@@ -1,5 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -36,22 +38,22 @@ def post(request, *, post_id):
 
 def login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
+        form = AuthenticationForm(request.POST)
+        username = request.POST['username']
+        password = request.POST['password']
         user = authenticate(username=username, password=password)
-
-        if user:
+    
+        if user is not None:
             if user.is_active:
                 auth_login(request, user)
                 return redirect(reverse('gutigers:index'))
-            else:
-                return HttpResponse("Your account is disabled.")
         else:
-            print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
+            messages.error(request,'Username or password not correct!')
+            return redirect(reverse('gutigers:login'))
+    
     else:
-        return render(request, 'gutigers/login.html')
+        form = AuthenticationForm()
+    return render(request, 'gutigers/login.html', {'form': form})
 
 @login_required
 def logout(request):
