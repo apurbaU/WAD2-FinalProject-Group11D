@@ -1,12 +1,12 @@
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from gutigers.forms import UserForm, UserProfileForm
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from gutigers.forms import CommentForm, MatchForm, UserForm, UserProfileForm, ChangeForm
 from gutigers.helpers.comment import CommentView
 from gutigers.helpers.profile import ProfileView
 from gutigers.models import Comment, Manager, Post, Team, UserProfile
-from django.urls import reverse
-from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 def index(request):
     return render(request, 'gutigers/index.html')
@@ -96,3 +96,52 @@ def result(request):
 
 def user(request, *, username_slug):
     return render(request, 'gutigers/user.html')
+
+@login_required
+def settings(request):
+    username_slug=UserProfile.objects.get(user=request.user).url_slug
+  
+    form = MatchForm()
+
+    if request.method == 'POST':
+        form = MatchForm(request.POST)
+
+        if form.is_valid():
+
+            form.save(commit=True)
+
+            return redirect(reverse('gutigers:settings'))
+        else:
+
+            print(form.errors)
+
+       
+
+    profile=UserProfile.objects.get(pk=username_slug)
+
+    userform= ChangeForm(instance=profile)
+
+
+    if request.method == 'POST':
+        userform = ChangeForm(request.POST,instance=profile)
+
+        if userform.is_valid():
+
+            profilechange=userform.save(commit=False)
+          
+            if 'avatar' in request.FILES:
+              profilechange.avatar = request.FILES['avatar']
+                
+               
+            
+            profilechange.save()
+          
+
+            return redirect(reverse('gutigers:settings'))
+        else:
+
+            
+            print(userform.errors)
+
+    context_dict={'form':form,'userform':userform, 'is_manager':Manager.objects.filter(user=profile).exists()}
+    return render(request, 'gutigers/settings.html', context=context_dict)

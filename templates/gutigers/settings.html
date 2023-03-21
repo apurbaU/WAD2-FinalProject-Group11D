@@ -1,0 +1,45 @@
+{% extends 'gutigers/base.html' %}
+
+
+{% block title_block %}
+	Settings
+{% endblock %}
+
+{% block body_block %}
+		
+		{% if is_manager %}
+		<h4>Add Result</h4>
+		<div>
+			<form id="MatchForm" method="post" action="/gutigers/settings/">
+			{% csrf_token %}
+			{% for hidden in form.hidden_fields %}
+				{{ hidden }}
+			{% endfor %}
+			{% for field in form.visible_fields %}
+				{{ field.errors }}
+				{{ field.label }}
+				{{ field }}
+				<br></br>
+			{% endfor %}
+			<input type="submit" name="submit" value="Add Result" />
+		</form>
+		</div>
+		{% endif %}
+
+		<h4>Change Account Info </h4>
+		<div>
+			<form id="UserForm" method="post" action="/gutigers/settings/">
+			{% csrf_token %}
+			{% for hidden in userform.hidden_fields %}
+				{{ hidden }}
+			{% endfor %}
+			{% for field in userform.visible_fields %}
+				{{ field.errors }}
+				{{ field.label }}
+				{{ field }}
+				<br></br>
+			{% endfor %}
+			<input type="submit" name="submit" value="Change Details" />
+		</form>
+		</div>
+{% endblock %}

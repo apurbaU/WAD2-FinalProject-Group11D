@@ -7,6 +7,7 @@ app_name = 'gutigers'
 urlpatterns = [
     path('', views.index, name='index'),
     path('404/', views.not_found, name='404'),
+    path('settings/', views.settings, name='settings'),
     path('team/<slug:team_name_slug>/', views.team_detail, name='team_detail'),
     path('contact/', views.contact, name='contact'),
     path('post/<int:post_id>/', views.post, name='post'),
