@@ -1,0 +1,52 @@
+{% extends 'gutigers/base.html' %}
+
+{% load staticfiles %}
+
+{% block title_block %}
+Contact
+{% endblock %}
+
+
+{% block body_block %}
+
+	<div type="container">
+		<div style = "text-align: center;">
+			<h1>Contact</h1>
+			
+			<div style = "text-align: center;">
+				<div style = "display: inline-block">
+					<img class="vh-80 vw-100" src="{% static 'images/contact.png' %}" alt="GU Tigers's icon">
+				</div>
+			</div>
+			<h2>
+			Our Socials
+			</h2>
+			  </div>
+			
+	</div>
+	<br>
+	<div class="d-flex justify-content-center">
+
+
+		<a href="https://www.instagram.com/gu_tigers/" class = "mx-3">
+			<img src="{% static 'images/socials/iglog.png' %}" alt="Instagram Icon" style="height: 60px;">
+		</a>
+		
+		<a href="https://www.facebook.com/GlasgowUniversityTigers" class = "mx-3">
+			<img src="{% static 'images/socials/fblog.png' %}" alt="Facebook Icon" style="height: 60px;">
+		</a>
+
+		<a href="https://twitter.com/gusatigers?lang=en/" class = "mx-3">
+			<img src="{% static 'images/socials/twtlg.png' %}" alt="Email Icon" style="height: 60px;">
+		</a>
+	</div>
+
+{% endblock %}
+
+
+</doctype>
+
+
+
+
+
