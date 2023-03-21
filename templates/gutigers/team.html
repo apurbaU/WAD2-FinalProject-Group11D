@@ -8,22 +8,11 @@
 	<script defer="">{% include 'gutigers/components/comment.js' %}</script>
 	<div class="container">
 		<div class="row">
-			<main class="col-7">
-				<header class="card mb-3">
-					<div class="card-header container">
-						<div class="row">
-							<img src="{{MEDIA_URL}}{{team.icon}}" alt="{{team.name}}'s icon" class="col-3"/>
-							<div class="col-7">
-								<h2>{{team.name}}</h2>
-								<p>{{supporter_count}} Supporters</p>
-							</div>
-						</div>
-					</div>
-					<p class="card-body" style="min-height: 10rem;">{{team.bio}}</p>
-				</header>
+			<main class="col-8">
+				{% include 'gutigers/components/profile-frame.html' with profile=profile %}
 				<section>{% include 'gutigers/components/comment-section.html' %}</section>
 			</main>
-			<aside class="card col-3">
+			<aside class="card col-4">
 				<h3 class="card-title">Team News</h3>
 				{% lorem 1 b random %}
 			</aside>

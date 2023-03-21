@@ -20,9 +20,16 @@ class Match(models.Model):
     venue= models.CharField(max_length=128)
     home_score = models.PositiveSmallIntegerField(null=True)
     away_score = models.PositiveSmallIntegerField(null=True)
+    home_diff_away_score = models.SmallIntegerField()
 
     home_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='+')
     away_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='+')
+
+    def save(self, *args, **kwargs):
+        self.home_diff_away_score = int(self.home_score > self.away_score)
+        if self.home_score < self.away_score: self.home_diff_away_score = -1
+        super(Match, self).save(*args, **kwargs)
+
 
     def __str__(self):
         return f'{self.home_team} vs {self.away_team} @ {self.venue} {self.time}'
@@ -52,7 +59,7 @@ class Manager(models.Model):
     owned_teams = models.ManyToManyField(Team)
 
     def __str__(self):
-        return self.user.name
+        return self.user.display_name
 
 class Post(models.Model):
     title = models.CharField(max_length=1024)
