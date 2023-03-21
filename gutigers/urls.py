@@ -9,7 +9,6 @@ urlpatterns = [
     path('404/', views.not_found, name='404'),
     path('team/<slug:team_name_slug>/', views.team_detail, name='team_detail'),
     path('contact/', views.contact, name='contact'),
-    path('player/', views.player, name='player'),
     path('post/<int:post_id>/', views.post, name='post'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),

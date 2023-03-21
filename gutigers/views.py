@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from gutigers.forms import UserForm, UserProfileForm
 from gutigers.helpers.comment import CommentView
+from gutigers.helpers.profile import ProfileView
 from gutigers.models import Comment, Manager, Post, Team, UserProfile
 from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
@@ -18,6 +19,7 @@ def team_detail(request, *, team_name_slug):
                     Comment.objects.filter(about_post=None, replies_to=None)))}
     try: context_dict['team'] = Team.objects.get(url_slug=team_name_slug)
     except Team.DoesNotExist: return redirect(reverse('gutigers:404'))
+    context_dict['profile'] = ProfileView(context_dict['team'])
     context_dict['new_right'] = (request.user.is_authenticated and
         Manager.objects.filter(user=UserProfile.objects.get(user=request.user)).exists())
     context_dict['supporter_count'] = (UserProfile.objects
@@ -26,9 +28,6 @@ def team_detail(request, *, team_name_slug):
 
 def contact(request):
     return render(request, 'gutigers/contact.html')
-
-def player(request):
-    return render(request, 'gutigers/player.html')
 
 def post(request, *, post_id):
     try: context_dict = {'post': Post.objects.get(pk=post_id)}
