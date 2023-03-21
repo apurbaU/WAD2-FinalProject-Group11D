@@ -26,19 +26,12 @@ class UserProfileForm(forms.ModelForm):
 
 class MatchForm(forms.ModelForm):
 
-	time= forms.DateField(help_text="Date of the game (format dd-mm-yyyy)")
-	venue=forms.CharField(max_length=128, help_text="Enter Venue of game")
-	homeTeam = forms.ModelChoiceField(queryset=Team.objects.all().order_by('name'),
-			help_text="Home Teams")
-	awayTeam = forms.ModelChoiceField(queryset=Team.objects.all().order_by('name'),
-			help_text="Away Teams")
-	homeScore = forms.IntegerField(help_text="Home Score.")
-	awayScore = forms.IntegerField(help_text="Away Score.")
+
 
 	class Meta:
 
 		model = Match
-		fields = ('time','venue','homeTeam','awayTeam','homeScore','awayScore',)
+		fields = ('date','venue','home_team','away_team','home_score','away_score',)
 
 class ChangeForm(forms.ModelForm):
 	
@@ -48,4 +41,4 @@ class ChangeForm(forms.ModelForm):
 		model = UserProfile
 		exclude=('url_slug',)
 		
-		widgets={'user':forms.HiddenInput()}
+		widgets={'user':forms.HiddenInput(),'work_team':forms.HiddenInput()}

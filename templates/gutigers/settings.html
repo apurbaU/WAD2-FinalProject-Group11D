@@ -6,41 +6,40 @@
 {% endblock %}
 
 {% block body_block %}
-		<h1>Change Account Info </h1>
+		
+		{% if is_manager %}
+		<h4>Add Result</h4>
 		<div>
-			<form id="UserForm" method="post" action="/gu_tigers/settings/">
-			{% csrf_token %}
-			{% for hidden in form2.hidden_fields %}
-				{{ hidden }}
-			{% endfor %}
-			{% for field in form2.visible_fields %}
-				{{ field.errors }}
-				{{ field.help_text }}
-				{{ field }}
-				<input type="submit" name="submit" value="Change"+form2.label />
-				<br></br>
-
-			{% endfor %}
-			</form>
-		</div>
-
-
-	
-		<h1>Add Result</h1>
-		<div>
-			<form id="MatchForm" method="post" action="/gu_tigers/settings/">
+			<form id="MatchForm" method="post" action="/gutigers/settings/">
 			{% csrf_token %}
 			{% for hidden in form.hidden_fields %}
 				{{ hidden }}
 			{% endfor %}
 			{% for field in form.visible_fields %}
 				{{ field.errors }}
-				{{ field.help_text }}
+				{{ field.label }}
 				{{ field }}
 				<br></br>
 			{% endfor %}
 			<input type="submit" name="submit" value="Add Result" />
 		</form>
 		</div>
+		{% endif %}
 
+		<h4>Change Account Info </h4>
+		<div>
+			<form id="UserForm" method="post" action="/gutigers/settings/">
+			{% csrf_token %}
+			{% for hidden in userform.hidden_fields %}
+				{{ hidden }}
+			{% endfor %}
+			{% for field in userform.visible_fields %}
+				{{ field.errors }}
+				{{ field.label }}
+				{{ field }}
+				<br></br>
+			{% endfor %}
+			<input type="submit" name="submit" value="Change Details" />
+		</form>
+		</div>
 {% endblock %}

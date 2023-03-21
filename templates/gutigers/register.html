@@ -9,7 +9,7 @@
 <h1>GUTigers Account Registration</h1>
 {% if registered %}
 <strong>You are registered!</strong>
-<a href="{% url 'gutigers:index' %}">Return to the homepage.</a><br />
+<a href="{% url 'gutigers:login' %}">Login Now.</a><br />
 {% else %}
 <strong>Register Here</strong><br />
 <form id="user_form" method="post" action="{% url 'gutigers:register' %}"

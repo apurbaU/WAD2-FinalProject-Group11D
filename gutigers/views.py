@@ -110,7 +110,7 @@ def settings(request):
 
             form.save(commit=True)
 
-            return redirect('/gutigers/')
+            return redirect(reverse('gutigers:settings'))
         else:
 
             print(form.errors)
@@ -137,12 +137,11 @@ def settings(request):
             profilechange.save()
           
 
-            return redirect('/gutigers/')
+            return redirect(reverse('gutigers:settings'))
         else:
 
             
             print(userform.errors)
 
-
-    context_dict={'form':form,'userform':userform}
+    context_dict={'form':form,'userform':userform, 'is_manager':Manager.objects.filter(user=profile).exists()}
     return render(request, 'gutigers/settings.html', context=context_dict)
