@@ -4,7 +4,7 @@
       <img src="{{MEDIA_URL}}{{profile.icon}}" alt="{{profile.name}}'s icon" class="col-3"/>
       <div class="col-7">
         <h2>{{profile.name}}</h2>
-        {% if profile.type == 'team' %}
+        {% if profile.type == 'Team' %}
           <p>{{supporter_count}} Supporters</p>
           {% with match_data=profile.match_data %}
             <p>
@@ -12,6 +12,8 @@
               ({{match_data.wins}} Wins, {{match_data.draws}} Draws, {{match_data.losses}} Losses)
             </p>
           {% endwith %}
+        {% elif profile.type == 'User' %}
+            <p>Joined {{profile.date_joined}}, email: {{profile.email}}</p>
         {% endif %}
       </div>
     </div>

@@ -6,7 +6,8 @@ class ProfileView:
         if type(orm) is Team:
             self.name, self.icon, self.bio = orm.name, orm.icon, orm.bio
             self.match_data = TeamMatchDataView(orm)
-            self.type = 'team'
+            self.type = 'Team'
         elif type(orm) is UserProfile:
             self.name, self.icon, self.bio = orm.display_name, orm.avatar, orm.bio
-            self.type = 'user'
+            self.date_joined, self.email = orm.user.date_joined, orm.user.username
+            self.type = 'User'

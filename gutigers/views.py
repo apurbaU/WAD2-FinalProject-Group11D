@@ -17,16 +17,19 @@ def not_found(request, exception=None):
     return render(request, 'gutigers/404.html')
 
 def team_detail(request, *, team_name_slug):
-    context_dict = {'post_id': -1, 'comments': list(map(CommentView,
-                    Comment.objects.filter(about_post=None, replies_to=None)))}
-    try: context_dict['team'] = Team.objects.get(url_slug=team_name_slug)
+    try: context_dict = {'team': Team.objects.get(url_slug=team_name_slug)}
     except Team.DoesNotExist: return redirect(reverse('gutigers:404'))
     context_dict['profile'] = ProfileView(context_dict['team'])
-    context_dict['new_right'] = (request.user.is_authenticated and
-        Manager.objects.filter(user=UserProfile.objects.get(user=request.user)).exists())
     context_dict['supporter_count'] = (UserProfile.objects
                                        .filter(support_team=context_dict['team']).count())
-    return render(request, 'gutigers/team.html', context=context_dict)
+    if team_name_slug == 'gutigers':
+        context_dict['post_id'] = -1
+        context_dict['comments'] = list(map(CommentView,
+                                        Comment.objects.filter(about_post=None, replies_to=None)))
+        context_dict['new_right'] = (request.user.is_authenticated and
+            Manager.objects.filter(user=UserProfile.objects.get(user=request.user)).exists())
+        return render(request, 'gutigers/team.html', context=context_dict)
+    else: return render(request, 'gutigers/profile.html', context=context_dict)
 
 def contact(request):
     return render(request, 'gutigers/contact.html')
@@ -42,7 +45,7 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-    
+
         if user is not None:
             if user.is_active:
                 auth_login(request, user)
@@ -50,7 +53,7 @@ def login(request):
         else:
             messages.error(request,'Username or password not correct!')
             return redirect(reverse('gutigers:login'))
-    
+
     else:
         form = AuthenticationForm()
     return render(request, 'gutigers/login.html', {'form': form})
@@ -97,12 +100,14 @@ def result(request):
     return render(request, 'gutigers/result.html')
 
 def user(request, *, username_slug):
-    return render(request, 'gutigers/user.html')
+    try: context_dict = {'profile': ProfileView(UserProfile.objects.get(url_slug=username_slug))}
+    except UserProfile.DoesNotExist: return redirect(reverse('gutigers:404'))
+    return render(request, 'gutigers/profile.html', context=context_dict)
 
 @login_required
 def settings(request):
     username_slug=UserProfile.objects.get(user=request.user).url_slug
-  
+
     form = MatchForm()
 
     if request.method == 'POST':
@@ -117,12 +122,9 @@ def settings(request):
 
             print(form.errors)
 
-       
-
     profile=UserProfile.objects.get(pk=username_slug)
 
     userform= ChangeForm(instance=profile)
-
 
     if request.method == 'POST':
         userform = ChangeForm(request.POST,instance=profile)
@@ -130,19 +132,15 @@ def settings(request):
         if userform.is_valid():
 
             profilechange=userform.save(commit=False)
-          
+
             if 'avatar' in request.FILES:
               profilechange.avatar = request.FILES['avatar']
-                
-               
-            
+
             profilechange.save()
-          
 
             return redirect(reverse('gutigers:settings'))
         else:
 
-            
             print(userform.errors)
 
     context_dict={'form':form,'userform':userform, 'is_manager':Manager.objects.filter(user=profile).exists()}
