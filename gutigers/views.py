@@ -7,6 +7,8 @@ from gutigers.helpers.profile import ProfileView
 from gutigers.models import Comment, Manager, Post, Team, UserProfile
 from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
 
 def index(request):
     return render(request, 'gutigers/index.html')
@@ -36,22 +38,22 @@ def post(request, *, post_id):
 
 def login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
+        form = AuthenticationForm(request.POST)
+        username = request.POST['username']
+        password = request.POST['password']
         user = authenticate(username=username, password=password)
-
-        if user:
+    
+        if user is not None:
             if user.is_active:
                 auth_login(request, user)
                 return redirect(reverse('gutigers:index'))
-            else:
-                return HttpResponse("Your account is disabled.")
         else:
-            print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
+            messages.error(request,'Username or password not correct!')
+            return redirect(reverse('gutigers:login'))
+    
     else:
-        return render(request, 'gutigers/login.html')
+        form = AuthenticationForm()
+    return render(request, 'gutigers/login.html', {'form': form})
 
 @login_required
 def logout(request):

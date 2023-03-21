@@ -9,19 +9,28 @@
 <h1>GUTigers Account Registration</h1>
 {% if registered %}
 <strong>You are registered!</strong>
-<a href="{% url 'gutigers:index' %}">Return to the homepage.</a><br />
+<a href="{% url 'gutigers:login' %}">Login here!</a><br />
 {% else %}
-<strong>Register Here</strong><br />
-<form id="user_form" method="post" action="{% url 'gutigers:register' %}"
-	enctype="multipart/form-data">
+<br />
+<div class="card bg-light mb-3" style="max-width: 55rem;">
+  <div class="card-header"><strong>Create Account</strong></div>
+  <div class="card-body">
+    <p class="card-text">
+		<form id="user_form" method="post" action="{% url 'gutigers:register' %}"
+			enctype="multipart/form-data">
+		
+			{% csrf_token %}
+			
+			{{ user_form.as_p }}
+			{{ profile_form.as_p }}
+			
+			<button type="submit" class="btn btn-outline-dark">Register</button>
+		</form>
 	
-	{% csrf_token %}
-	
-	{{ user_form.as_p }}
-	{{ profile_form.as_p }}
-	
-	<input type="submit" name="submit" value="Register" />
-</form>
+	</p>
+  </div>
+</div>
+
 {% endif %}
 	
 {% endblock %}

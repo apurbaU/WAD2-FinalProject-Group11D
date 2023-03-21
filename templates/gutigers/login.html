@@ -6,14 +6,28 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Login to GuTigers</h1>
-<form id="login_form" method="post" action="{% url 'gutigers:login' %}">
-	{% csrf_token %}
-	Username: <input type="text" name="username" value="" size="50" />
-	<br />
-	Password: <input type="password" name="password" value="" size="50" />
-	<br />
-	
-	<input type="submit" value="submit" />
-</form>	
+<h1>Login</h1>
+<br />
+<div class="card bg-light mb-3" style="max-width: 40rem;">
+  <div class="card-header">GuTigers</div>
+  <div class="card-body">
+    <h5 class="card-title">Login to GuTigers</h5>
+    <p class="card-text">
+		<form method="post">
+			{% csrf_token %}
+			{{ form.as_p}}
+			<button type="submit" class="btn btn-outline-dark">Submit</button>
+		</form>	
+		<br />
+		{% for message in messages %}
+    
+			<div class="alert alert-dark">
+				{{ message }}				
+			</div>
+
+		{% endfor %}
+	</p>
+  </div>
+</div>
+
 {% endblock %}
