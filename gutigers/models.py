@@ -17,7 +17,7 @@ class Team(models.Model):
 
 class Match(models.Model):
     time = models.DateTimeField()
-    
+    venue= models.CharField(max_length=128)
     home_score = models.PositiveSmallIntegerField(null=True)
     away_score = models.PositiveSmallIntegerField(null=True)
 
@@ -39,6 +39,7 @@ class UserProfile(models.Model):
 
     def save(self, *args, **kwargs):
         self.url_slug = slugify(self.user.username)
+       
         super(UserProfile, self).save(*args, **kwargs)
 
     def __str__(self):

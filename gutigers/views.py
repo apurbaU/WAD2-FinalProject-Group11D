@@ -2,11 +2,13 @@ from http import HTTPStatus
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from gutigers.forms import CommentForm, MatchForm, UserForm, UserProfileForm
+from gutigers.forms import CommentForm, MatchForm, UserForm, UserProfileForm, ChangeForm
 from gutigers.helpers.comment import CommentView
+
 from gutigers.models import Comment, Team, User, UserProfile
 from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login
+
 import sys
 
 def index(request):
@@ -91,11 +93,11 @@ def register(request):
             profile = profile_form.save(commit=False)
             profile.user = user
             
-            #if 'avatar' in request.FILES:
-             #   profile.avatar = request.FILES['avatar']
+            if 'avatar' in request.FILES:
+              profile.avatar = request.FILES['avatar']
                 
                
-            #print(request.FILES, file=sys.stderr)
+            print(request.FILES, file=sys.stderr)
             profile.save()
             registered = True
         else:
@@ -115,8 +117,10 @@ def result(request):
 def user(request, *, username_slug):
     return render(request, 'gutigers/user.html')
 
+@login_required
 def settings(request):
-   
+    username_slug=UserProfile.objects.get(user=request.user).url_slug
+  
     form = MatchForm()
 
     if request.method == 'POST':
@@ -131,23 +135,35 @@ def settings(request):
 
             print(form.errors)
 
-        form = MatchForm()
+       
 
-    
-    form2= UserChangeForm()
+    profile=UserProfile.objects.get(pk=username_slug)
+
+    userform= ChangeForm(instance=profile)
+
 
     if request.method == 'POST':
-        form2 = UserChangeForm(request.POST)
+        userform = ChangeForm(request.POST,instance=profile)
 
-        if form2.is_valid():
+        if userform.is_valid():
 
-            form.save(commit=True)
+            profilechange=userform.save(commit=False)
+          
+            if 'avatar' in request.FILES:
+              profilechange.avatar = request.FILES['avatar']
+                
+               
+            
+            profilechange.save()
+          
 
             return redirect('/gutigers/')
         else:
 
-            print(form2.errors)
+            
+            print(userform.errors)
 
-    context_dict={'form2':form2}
+
+    context_dict={'form':form,'userform':userform}
     return render(request, 'gutigers/settings.html', context=context_dict)
 
