@@ -1,7 +1,7 @@
 from django import forms
 from gutigers.models import Comment, UserProfile
 from django.contrib.auth.models import User
-from gutigers.models import Team
+from gutigers.models import Team, Match
 
 class CommentForm(forms.ModelForm):
     body = forms.CharField(widget=forms.Textarea(attrs={'rows': '3'}), help_text='I would like to say:')
@@ -21,3 +21,25 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('avatar', 'display_name', 'team_supported')
+        
+class SaveMatchForm(forms.ModelForm):
+    class Meta:
+        model = Match
+        fields = ['time', 'venue', 'home_team', 'away_team', 'home_score', 'away_score']
+        widgets = {
+            'time': forms.DateTimeInput(),
+            'home_team': forms.Select(attrs={'class': 'selectpicker', 'data-live-search': 'true'}),
+            'away_team': forms.Select(attrs={'class': 'selectpicker', 'data-live-search': 'true'}),
+            'home_score': forms.NumberInput(attrs={'min': 0}),
+            'away_score': forms.NumberInput(attrs={'min': 0}),
+        }
+
+class CreateMatchForm(forms.ModelForm):
+    class Meta:
+        model = Match
+        fields = ['time', 'venue', 'home_team', 'away_team']
+        widgets = {
+            'time': forms.DateTimeInput(),
+            'home_team': forms.Select(attrs={'class': 'selectpicker', 'data-live-search': 'true'}),
+            'away_team': forms.Select(attrs={'class': 'selectpicker', 'data-live-search': 'true'}),
+        }

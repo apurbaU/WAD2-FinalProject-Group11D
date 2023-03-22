@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
+from datetime import datetime
+
 
 class Team(models.Model):
     url_slug = models.SlugField(primary_key=True, unique=True)
@@ -13,14 +15,13 @@ class Team(models.Model):
     lost = models.PositiveIntegerField(default=0)
     goals_for = models.PositiveIntegerField(default=0)
     goals_against = models.PositiveIntegerField(default=0)
+    points = models.PositiveIntegerField(default=0)
     
     @property
     def goal_difference(self):
         return self.goals_for - self.goals_against
 
-    @property
-    def points(self):
-        return self.won * 3 + self.drawn
+  
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

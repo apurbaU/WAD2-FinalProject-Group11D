@@ -68,6 +68,7 @@
 	.image-container img {
 		height: 100vh;
 		background-size: cover;
+		width:100%;
 		background-position: center;
 	}
 
@@ -303,6 +304,62 @@
 }
 
 #league-table tbody tr.odd {
+  background-color: yellow;
+  color: black;
+}
+
+
+#fixtures-table {
+  border-collapse: collapse;
+  width: 100%;
+  height:100%;
+  margin-bottom: 1em;
+}
+
+.table-header {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  background-color: white;
+  color: black;
+  padding: 1em;
+}
+
+
+#fixtures-table th,
+#fixtures-table td {
+  padding: 0.5em;
+  text-align: center;
+}
+
+#fixtures-table th {
+  background-color: #333;
+  color: #fff;
+}
+
+#fixtures-table th.table-header {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  background-color: #ffc107;
+  color: #333;
+}
+
+#fixtures-table .match-time{
+	text-align: left;
+	background-color: white;
+}
+
+#fixtures-table .full_fixture{
+	background-color: yellow;
+}
+
+#fixtures-table tbody tr.even {
+  background-color: white;
+  color:black;
+}
+
+#fixtures-table tbody tr.odd {
   background-color: yellow;
   color: black;
 }

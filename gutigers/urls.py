@@ -16,6 +16,9 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('result/', views.result, name='result'),
     path('league_table/', views.league_table, name= 'league_table'),
+    path('fixtures/', views.fixtures, name='fixtures'),
+    path('fixtures/save/', views.save_match, name='save_match'),
+    path('fixtures/create/', views.create_match, name='create_match'),
     path('user/<slug:username_slug>/', views.user, name='user'),
 
     # internal pages

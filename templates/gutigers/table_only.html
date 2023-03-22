@@ -1,8 +1,37 @@
+<style>
+	 /* Responsive styles */
+  @media screen and (max-width: 767px) {
+    /* Reduce font size for small screens */
+    #league-table {
+      font-size: 0.8em;
+    }
+    /* Hide position column on small screens */
+    #league-table tbody td:first-child {
+      display: none;
+    }
+    /* Add header for small screens */
+    #league-table thead th:first-child {
+      display: none;
+    }
+    #league-table thead td:first-child {
+      display: table-cell;
+      font-weight: bold;
+      text-align: center;
+    }
+    #league-table tbody td:first-child:before {
+      content: "Pos";
+      display: block;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+</style>
+
 {% block body_block %}
   <table id="league-table">
     <thead>
 	 <tr>
-        <td colspan="10" class="table-header">League Table</td>
+        <td colspan="10" class="table-header" style = "background-color:yellow; color: black">League Table</td>
       </tr>
       <tr>
         <th>Position</th>

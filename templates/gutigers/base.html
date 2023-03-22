@@ -65,7 +65,7 @@
       <li class="nav-item">
         <a
           class="nav-link"
-          href="{% url 'gutigers:result' %}#fixtures"
+          href="{% url 'gutigers:fixtures' %}#fixtures"
           >Fixtures</a
         >
       </li>
@@ -91,8 +91,9 @@
 	{% if upper_half %}
 		<div class="container-fluid px-0">
 			<div class="image-container">
+				<img src="{% static 'images/gutigers.jpg' %}" alt="Profile" />
 			</div>
-			<img src="{% static 'images/gutigers.jpg' %}" alt="Profile" />
+			
 		</div>
 	{% endif %}
 		<div>

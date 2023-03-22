@@ -1,16 +1,19 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from gutigers.forms import UserForm, UserProfileForm
+from gutigers.forms import UserForm, UserProfileForm, SaveMatchForm, CreateMatchForm
 from gutigers.helpers.comment import CommentView
-from gutigers.models import Comment, Manager, Post, Team, UserProfile
+from gutigers.models import Comment, Manager, Post, Team, UserProfile, Match
 from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.utils import timezone
+
 
 def index(request):
     teams = Team.objects.all()
+    matches = Match.objects.filter(time__gt=timezone.now()).order_by('time')
     teams = sorted(teams, key=lambda t: (-t.points, -t.goal_difference, -t.goals_for))
-    return render(request, 'gutigers/index.html', context= {'upper_half' : True, 'teams': teams})
+    return render(request, 'gutigers/index.html', context= {'upper_half' : True, 'teams': teams, 'matches': matches})
 
 def not_found(request, exception=None):
     return render(request, 'gutigers/404.html')
@@ -105,3 +108,71 @@ def league_table(request):
     teams = sorted(teams, key=lambda t: (-t.points, -t.goal_difference, -t.goals_for))
     print(teams)
     return render(request, 'gutigers/league_table.html', {'teams': teams})
+
+def save_match(request):
+    form = SaveMatchForm()
+    if request.method == 'POST':
+        form = SaveMatchForm(request.POST)
+        if form.is_valid():
+            # Save the form data to a new Match object
+            match = form.save()
+
+            # Update the associated Team objects based on the match results
+            home_team = match.home_team
+            away_team = match.away_team
+
+            home_team.played += 1
+            away_team.played += 1
+
+            home_team.goals_for += match.home_score
+            home_team.goals_against += match.away_score
+            away_team.goals_for += match.away_score
+            away_team.goals_against += match.home_score
+
+            if match.home_score > match.away_score:
+                home_team.won += 1
+                away_team.lost += 1
+                home_team.points += 3
+            elif match.home_score < match.away_score:
+                home_team.lost += 1
+                away_team.won += 1
+                away_team.points += 3
+            else:
+                home_team.drawn += 1
+                away_team.drawn += 1
+                home_team.points += 1
+                away_team.points += 1
+
+            home_team.save()
+            away_team.save()
+
+            return HttpResponse("Match Saved")
+        else:
+            print(form)
+            teams = Team.objects.all()
+            return render(request, 'gutigers/save_match.html', {'teams': teams, 'form':form})
+    else:
+    # Render the form template
+        teams = Team.objects.all()
+        return render(request, 'gutigers/save_match.html', {'teams': teams, 'form':form})
+        
+def create_match(request):
+    form = CreateMatchForm()
+    if request.method == 'POST':
+        form = CreateMatchForm(request.POST)
+        if form.is_valid():
+            # Save the form data to a new Match object
+            match = form.save()
+
+            return redirect(reverse('gutigers:fixtures'))
+        else:
+            teams = Team.objects.all()
+            return render(request, 'gutigers/create_match.html', {'teams': teams, 'form': form})
+    else:
+        teams = Team.objects.all()
+        return render(request, 'gutigers/create_match.html', {'teams': teams, 'form': form})
+        
+def fixtures(request):
+    matches = Match.objects.filter(time__gt=timezone.now()).order_by('time')
+    
+    return render(request, 'gutigers/fixtures.html', {'matches': matches})
