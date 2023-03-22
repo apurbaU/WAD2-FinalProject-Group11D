@@ -1,36 +1,36 @@
 {% extends 'gutigers/base.html' %}
-
-
+{% load staticfiles %}
 {% block title_block %}
-	Register
+    Register
 {% endblock %}
 
 {% block body_block %}
-<h1>GUTigers Account Registration</h1>
-{% if registered %}
-<strong>You are registered!</strong>
-<a href="{% url 'gutigers:login' %}">Login here!</a><br />
-{% else %}
-<br />
-<div class="card bg-light mb-3" style="max-width: 55rem;">
-  <div class="card-header"><strong>Create Account</strong></div>
-  <div class="card-body">
-    <p class="card-text">
-		<form id="user_form" method="post" action="{% url 'gutigers:register' %}"
-			enctype="multipart/form-data">
-		
-			{% csrf_token %}
-			
-			{{ user_form.as_p }}
-			{{ profile_form.as_p }}
-			
-			<button type="submit" class="btn btn-outline-dark">Register</button>
-		</form>
-	
-	</p>
-  </div>
-</div>
+		<div class="position-relative" style = "min-height: 100vh">
+		<div class="image-container position-absolute top-0 start-0 end-0 bottom-0"></div>
+		<img src="{% static 'images/gutigers.jpg' %}" alt="Profile" class="position-absolute top-0 start-0 end-0 bottom-0 w-100 h-100" style = "opacity:0.2"/>
+    {% if registered %}
+        <div class="alert alert-success" role="alert">
+            You are registered!
+            <a href="{% url 'gutigers:login' %}">Login here!</a>
+        </div>
+    {% else %}
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form id="user_form" method="post" action="{% url 'gutigers:register' %}"
+                      enctype="multipart/form-data">
+				<h1 class="text-center">GuTigers Account Registration</h1>
+                    {% csrf_token %}
 
-{% endif %}
-	
+                    {{ user_form.as_p }}
+                    {{ profile_form.as_p }}
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+		</div>
+    {% endif %}
+
 {% endblock %}

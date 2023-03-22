@@ -1,0 +1,43 @@
+{% extends 'gutigers/base.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+  <div class="position-relative" style="min-height: 100vh">
+    <div class="image-container position-absolute top-0 start-0 end-0 bottom-0"></div>
+    <img src="{% static 'images/gutigers.jpg' %}" alt="Profile" class="position-absolute top-0 start-0 end-0 bottom-0 w-100 h-100" style="opacity:0.2"/>
+{% block table %}
+  {% if matches %}
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8" style="margin-top: 5em;">
+          <div class="table-responsive">
+            <table class="table" id="fixtures-table">
+              <thead>
+				<tr>
+					<td colspan="10" class="table-header" style="background-color:yellow; color:black">Fixtures</td>
+				</tr>
+              </thead>
+              <tbody>
+              {% for match in matches %}
+                <tr>
+                  <td class = "match-time">{{ match.time|date:'F d, Y' }}</td>
+                </tr>
+                <tr>
+                  <td class = "full_fixture">
+                    {{ match.home_team.name }} <img src="{{ match.home_team.icon.url }}" alt="{{ match.home_team.name }} icon" width="25" height="25">
+                    {{ match.time|date:'H:i' }}
+                    <img src="{{ match.away_team.icon.url }}" alt="{{ match.away_team.name }} icon" width="25" height="25"> {{ match.away_team.name }}
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <p>No upcoming matches.</p>
+  {% endif %}
+{% endblock %}
+{% endblock %}

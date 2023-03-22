@@ -1,33 +1,38 @@
 {% extends 'gutigers/base.html' %}
 
+{% load staticfiles %}
 
 {% block title_block %}
 	Login
 {% endblock %}
 
 {% block body_block %}
-<h1>Login</h1>
-<br />
-<div class="card bg-light mb-3" style="max-width: 40rem;">
-  <div class="card-header">GuTigers</div>
-  <div class="card-body">
-    <h5 class="card-title">Login to GuTigers</h5>
-    <p class="card-text">
-		<form method="post">
-			{% csrf_token %}
-			{{ form.as_p}}
-			<button type="submit" class="btn btn-outline-dark">Submit</button>
-		</form>	
-		<br />
-		{% for message in messages %}
-    
-			<div class="alert alert-dark">
-				{{ message }}				
-			</div>
-
-		{% endfor %}
-	</p>
-  </div>
-</div>
-
+	<div class="position-relative" style = "min-height: 100vh"">
+		<div class="image-container position-absolute top-0 start-0 end-0 bottom-0"></div>
+		<img src="{% static 'images/gutigers.jpg' %}" alt="Profile" class="position-absolute top-0 start-0 end-0 bottom-0 w-100 h-100" style = "opacity:0.2"/>
+	    <div class="container position-relative" style = "background-color:transparent">
+	        <div class="row justify-content-center">
+	            <div class="col-md-6">
+	                <form id="user_form" method="post" action="{% url 'gutigers:login' %}">
+						<h1 class="text-center">GuTigers Account Login</h1>
+	                    {% csrf_token %}
+	                    <div class="form-group">
+	                        <label for="id_username">Username:</label>
+	                        <input type="text" name="username" class="form-control" value="" size="50" />
+	                    </div>
+	                    <div class="form-group">
+	                        <label for="id_password">Password:</label>
+	                        <input type="password" name="password" class="form-control" value="" size="50" />
+	                    </div>
+	                    <div class="form-group text-center">
+	                        <button type="submit" class="btn btn-primary">Login</button>
+	                    </div>
+	                </form>
+									{% for message in messages %}
+										<div class="alert alert-dark">{{ message }}</div>
+									{% endfor %}
+	            </div>
+	        </div>
+	    </div>
+	</div>
 {% endblock %}

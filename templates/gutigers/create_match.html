@@ -1,0 +1,13 @@
+{% extends 'gutigers/base.html' %}
+{% block body_block %}
+<div class="row justify-content-center">
+<div class="col-md-6">
+  <form id="user_form" method="POST" action="{% url 'gutigers:create_match' %}">
+	<h1>Create Match</h1>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create</button>
+  </form>
+</div>
+</div>
+{% endblock %}

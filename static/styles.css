@@ -1,14 +1,365 @@
-.comment-expand-btn { font: 0.8em monospace; }
-.comment-options img {
-    width: 1.5em;
-    height: 1.5em;
+	html, body{
+		background-color:black;
+		margin:0;
+		padding:0;
+		position: relative;
+		min-height: 100vh;
+	}
+	
+	.page_content {
+		 padding-bottom: 2.5rem;
+	}
+		
+/* Style the navigation bar */
+	.navbar {
+		background-color: black;
+		overflow: hidden;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 5px;
+	}
+
+/* Style the links inside the navigation bar */
+	.navbar a {
+		color: yellow;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+		font-size: 18px;
+	}
+	
+	.navbar a:hover{
+		 color:  #87CEEB;
+		transition: all 0.2s ease-in-out;
+	}
+
+
+/* Style the login button */
+	.btn {
+		 background-color: yellow;
+		 color: black;
+		 border: none;
+		 margin-left: 10px;
+		 border-radius: 5px;
+		 font-weight: bold;
+		 transition: all 0.3s ease-in-out;
+	}
+	
+		
+	.btn span{
+		color: black;	
+		font-size:16px;
+		padding: 0;
+		margin:0;
+		}
+		
+		
+
+/* Style the login button when hovered over */
+	.btn:hover {
+		 background-color: #87CEEB;
+		 color: white;
+		 box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	}
+
+
+/* Style the image container */
+	.image-container img {
+		height: 100vh;
+		background-size: cover;
+		width:100%;
+		background-position: center;
+	}
+
+/* Style the website logo image */
+	.navbar-brand img {
+		max-height: 40px;
+		max-width: 100%;
+		object-fit: contain;
+	}
+		
+	.navbar-toggler{
+		background-color:yellow;
+		background-size:cover;
+	}
+			
+	.container {
+		background-color: black;
+		padding: 20px;
+		box-sizing: border-box;
+	}
+	
+	.left-section, .right-section {
+			padding: 20px;
+			box-sizing: border-box;
+		}
+		
+	.left-section {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		height: 100%;
+	}
+
+	.left-section a {
+		margin-top: auto;
+	}
+		
+	
+	.main_footer{
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: 2.5rem; 
+		background-color: black !important;
+		border-top: 2px solid yellow;
+			
+	}
+		
+	.main_footer a {
+		color: yellow;
+		text-decoration:none;
+	}
+	
+	.main_footer p{
+		color:yellow;
+	}
+
+	.main_footer a:hover {
+		color: white !important;
+		text-decoration: underline;
+		color: #ccc;
+	}
+
+	@media (max-width: 767px) {
+		.main_footer .list-inline-item {
+		display: block;
+		margin-bottom: 10px;
+		}
+	}
+	
+	.comment-expand-btn { font: 0.8em monospace; }
+	
+	.comment-options img {
+		width: 1.5em;
+		height: 1.5em;
+	}
+
+	.comment-parent { white-space: nowrap; }
+	
+	.comment-parent > ul {
+		margin-bottom: 0;
+		padding-left: 1em;
+		border-left: 3px dotted dimgray;
+	}
+	
+	.comment-parent > summary, .comment-parent > ul > li { display: block; }
+	.comment-parent ul li { list-style-type: none; }
+	
+	
+	/* Styles for the registration form */
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        #user_form {
+            margin-top: 2rem;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+			border-radius:5px;
+            padding: 1rem;
+        }
+        #user_form label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        #user_form input[type="text"], form input[type="email"], form input[type="password"] {
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        #user_form input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+        #user_form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+		
+/*style for the 404 page*/
+
+	  .not-found-container {
+		margin-top: 10rem;
+		background-color: #f9f9f9;
+        border: 1px solid #ccc;
+		border-radius:5px;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		padding: 1rem;
+    }
+
+    .not-found-title {
+      font-size: 10rem;
+      color: #e74c3c;
+      margin-bottom: 0;
+    }
+
+    .not-found-text {
+      font-size: 2rem;
+      margin-top: 0;
+      margin-bottom: 3rem;
+    }
+	
+	.not-found-text a {
+		color: #007bff;
+		text-decoration: none;
+		border-bottom: 2px solid transparent;
+		transition: border-color 0.3s ease-in-out;
+	}
+
+	.not-found-text a:hover {
+		border-color: #007bff;
+	}
+
+	.not-found-text a::before {
+		content: "🏠";
+		display: inline-block;
+		margin-right: 0.5em;
+		transform: translateX(-1em);
+		opacity: 0;
+		transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+	}
+
+	.not-found-text a:hover::before {
+		transform: translateX(0);
+		opacity: 1;
+	}
+	
+
+	@keyframes animate404 {
+		0% { transform: rotate(0deg); }
+		25% { transform: rotate(20deg); }
+		50% { transform: rotate(-20deg); }
+		75% { transform: rotate(10deg); }
+		100% { transform: rotate(0deg); }
+	}
+
+	.not-found-title {
+		animation: animate404 1s ease-in-out infinite;
+	}
+
+#league-table {
+  border-collapse: collapse;
+  width: 100%;
+  height:100%;
+  margin-bottom: 1em;
 }
 
-.comment-parent { white-space: nowrap; }
-.comment-parent > ul {
-    margin-bottom: 0;
-    padding-left: 1em;
-    border-left: 3px dotted dimgray;
+.table-header {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  background-color: white;
+  color: black;
+  padding: 1em;
 }
-.comment-parent > summary, .comment-parent > ul > li { display: block; }
-.comment-parent ul li { list-style-type: none; }
+
+
+#league-table th,
+#league-table td {
+  padding: 0.5em;
+  text-align: center;
+}
+
+#league-table th {
+  background-color: #333;
+  color: #fff;
+}
+
+#league-table th.table-header {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  background-color: #ffc107;
+  color: #333;
+}
+
+#league-table tbody tr.even {
+  background-color: white;
+  color:black;
+}
+
+#league-table tbody tr.odd {
+  background-color: yellow;
+  color: black;
+}
+
+
+#fixtures-table {
+  border-collapse: collapse;
+  width: 100%;
+  height:100%;
+  margin-bottom: 1em;
+}
+
+.table-header {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  background-color: white;
+  color: black;
+  padding: 1em;
+}
+
+
+#fixtures-table th,
+#fixtures-table td {
+  padding: 0.5em;
+  text-align: center;
+}
+
+#fixtures-table th {
+  background-color: #333;
+  color: #fff;
+}
+
+#fixtures-table th.table-header {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  background-color: #ffc107;
+  color: #333;
+}
+
+#fixtures-table .match-time{
+	text-align: left;
+	background-color: white;
+}
+
+#fixtures-table .full_fixture{
+	background-color: yellow;
+}
+
+#fixtures-table tbody tr.even {
+  background-color: white;
+  color:black;
+}
+
+#fixtures-table tbody tr.odd {
+  background-color: yellow;
+  color: black;
+}

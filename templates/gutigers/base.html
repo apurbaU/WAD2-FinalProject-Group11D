@@ -1,7 +1,8 @@
-<!DOCTYPE html>
 {% load staticfiles %}
+<!DOCTYPE html>
 
-<html>
+
+<html lang ="en">
 	<head>
 		<title>
 			GuTigers -
@@ -9,27 +10,92 @@
 				Home Page
 			{% endblock %}
 		</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Add the Bootstrap library -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-				integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-		<link href="{% static 'styles.css' %}" rel="stylesheet">
+		integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+		<!-- Add the Bootstrap library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<!--<link href="{% static 'styles.css' %}" rel="stylesheet">-->
+		{% block stylesheets %}
+		<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+		{% endblock %}
 		<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+		{% block extra_css %}
+		{% endblock %}
+		{% block extra_js %}
+		{% endblock %}
+		
 	</head>
-	<body class="container">
-		<nav class="navbar navbar-expand-lg navbar-light bg-light w-100 mb-3 px-2">
-			<a href="{% url 'gutigers:index' %}" class="navbar-brand">GUTigers</a>
-			<ul class="navbar-nav navbar-light bg-light">
-				<li class="nav-item"><a class="nav-link" href="{% url 'gutigers:index' %}">Home</a></li>
-				<li class="nav-item"><a class="nav-link" href="{% url 'gutigers:result' %}#league-table">League Table</a></li>
-				<li class="nav-item"><a class="nav-link" href="{% url 'gutigers:result' %}#fixtures">Fixtures</a></li>
-				<li class="nav-item"><a class="nav-link" href="{% url 'gutigers:team_detail' 'gutigers' %}">Team</a></li>
-				{% if user.is_authenticated %}
-					<li class="nav-item"><a class="nav-link" href="{% url 'gutigers:logout' %}">Logout</a></li>
-				{% else %}
-				<li class="nav-item"><a class="nav-link" href="{% url 'gutigers:register' %}">Register</a></li>
-					<li class="nav-item"><a class="nav-link" href="{% url 'gutigers:login' %}">Login</a></li>
-				{% endif %}
-			</ul>
-		</nav>
+	
+<body>
+	
+<div class = "page_content">
+	<!-- Navigation bar -->
+<nav class="navbar navbar-expand-lg">
+  <a class="navbar-brand" href="{% url 'gutigers:index' %}">
+    <img src="{% static 'images/favicon.png' %}" alt="Profile" />
+  </a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'gutigers:index' %}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          href="{% url 'gutigers:league_table' %}#league_table"
+          >League Table</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          href="{% url 'gutigers:fixtures' %}#fixtures"
+          >Fixtures</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          href="{% url 'gutigers:team_detail' 'gutigers' %}"
+          >Team</a
+        >
+      </li>
+    </ul>
+    {% if user.is_authenticated %}
+    <a class="btn btn-primary ml-auto" href="{% url 'gutigers:logout' %}"><span>Logout</span></a>
+    {% else %}
+    <a class="btn btn-primary ml-auto" href="{% url 'gutigers:register' %}"><span>Register</span></a>
+    <a class="btn btn-primary" href="{% url 'gutigers:login' %}"><span>Login</span></a>
+    {% endif %}
+  </div>
+</nav>
+
+	
+	<!-- Image container -->
+	{% if upper_half %}
+		<div class="container-fluid px-0">
+			<div class="image-container">
+				<img src="{% static 'images/gutigers.jpg' %}" alt="Profile" />
+			</div>
+			
+		</div>
+	{% endif %}
 		<div>
 			{% block body_block %}
 			{% endblock %}
@@ -38,8 +104,26 @@
 			{% block sidebar_block %}
 			{% endblock %}
 		</div>
-		<hr />
-		<div>
-		</div>
-	</body>
+</div>
+<footer class = "main_footer">
+    <div class="container-fluid" style = "margin-top:10px">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="text">&copy; GuTigers</p>
+        </div>
+        <div class="col-md-6">
+          <ul class="list-inline text-md-right">
+            <li class="list-inline-item">
+              <a href="#" class="text">About</a>
+            </li>
+            <li class="list-inline-item">
+              <a href="{% url 'gutigers:contact' %}" class="text">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
 </html>
+
