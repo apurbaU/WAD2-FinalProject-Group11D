@@ -15,6 +15,7 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('register/', views.register, name='register'),
     path('result/', views.result, name='result'),
+    path('league_table/', views.league_table, name= 'league_table'),
     path('user/<slug:username_slug>/', views.user, name='user'),
 
     # internal pages

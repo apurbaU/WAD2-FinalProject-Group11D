@@ -8,7 +8,9 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 def index(request):
-    return render(request, 'gutigers/index.html', context= {'upper_half' : True})
+    teams = Team.objects.all()
+    teams = sorted(teams, key=lambda t: (-t.points, -t.goal_difference, -t.goals_for))
+    return render(request, 'gutigers/index.html', context= {'upper_half' : True, 'teams': teams})
 
 def not_found(request, exception=None):
     return render(request, 'gutigers/404.html')
@@ -97,3 +99,9 @@ def result(request):
 
 def user(request, *, username_slug):
     return render(request, 'gutigers/user.html')
+    
+def league_table(request):
+    teams = Team.objects.all()
+    teams = sorted(teams, key=lambda t: (-t.points, -t.goal_difference, -t.goals_for))
+    print(teams)
+    return render(request, 'gutigers/league_table.html', {'teams': teams})
