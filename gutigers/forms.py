@@ -1,7 +1,7 @@
 from django import forms
-from gutigers.models import Comment, UserProfile
+from gutigers.models import Comment, UserProfile, Team,Match
 from django.contrib.auth.models import User
-from gutigers.models import Team, Match
+from gutigers.models import Match
 
 class CommentForm(forms.ModelForm):
     body = forms.CharField(widget=forms.Textarea(attrs={'rows': '3'}), help_text='I would like to say:')
@@ -17,11 +17,11 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'password')
 
 class UserProfileForm(forms.ModelForm):
-    team_supported = forms.ModelChoiceField(queryset=Team.objects.all().order_by('name'))
+
     class Meta:
         model = UserProfile
         fields = ('avatar', 'display_name', 'team_supported')
-        
+
 class SaveMatchForm(forms.ModelForm):
     class Meta:
         model = Match
@@ -43,3 +43,24 @@ class CreateMatchForm(forms.ModelForm):
             'home_team': forms.Select(attrs={'class': 'selectpicker', 'data-live-search': 'true'}),
             'away_team': forms.Select(attrs={'class': 'selectpicker', 'data-live-search': 'true'}),
         }
+
+
+
+class MatchForm(forms.ModelForm):
+
+
+
+	class Meta:
+
+		model = Match
+		fields = ('date','venue','home_team','away_team','home_score','away_score',)
+
+class ChangeForm(forms.ModelForm):
+
+
+	class Meta:
+
+		model = UserProfile
+		exclude=('url_slug',)
+
+		widgets={'user':forms.HiddenInput(),'work_team':forms.HiddenInput()}

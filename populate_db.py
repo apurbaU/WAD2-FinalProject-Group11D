@@ -14,8 +14,8 @@ from gutigers.models import Comment, Manager, Match, Post, Team, UserProfile
 def populate():
     t1 = populate_team({'name': 'GUTigers', 'icon': 'team_profile_images/GUTigers.jpg', 'bio': 'Bio of GUTigers'})
     t2 = populate_team({'name': 'Other Team', 'icon': 'profile_images/MockUser.png', 'bio': 'Bio of other team'})
-    m1 = populate_match({'id': 1, 'time': datetime.now(timezone.utc), 'venue': 'Football field', 'h_score': 0, 'a_score': 3}, t1, t2)
-    m2 = populate_match({'id': 2, 'time': datetime.now(timezone.utc) + timedelta(days=100), 'venue': 'Baseball field', 'h_score': 2, 'a_score': 1}, t2, t1)
+    m1 = populate_match({'id': 1, 'date': datetime.now(timezone.utc), 'venue': 'Football field', 'h_score': 0, 'a_score': 3}, t1, t2)
+    m2 = populate_match({'id': 2, 'date': datetime.now(timezone.utc) + timedelta(days=100), 'venue': 'Baseball field', 'h_score': 2, 'a_score': 1}, t2, t1)
     u1 = User.objects.get_or_create(username='john@example.org', password='Password1')[0]
     u2 = User.objects.get_or_create(username='connor@example.com', password='12345678')[0]
     up1 = populate_user_profile({'name': 'johnny', 'avatar': 'profile_images/placeholder.png', 'bio': 'John\'s bio', 'support': t1}, u1)
@@ -35,9 +35,9 @@ def populate_team(team_spec):
     return team
 
 def populate_match(match_spec, team1, team2):
-    defaults = {'time': datetime.now(timezone.utc), 'home_score': 0, 'away_score': 0, 'home_team': team1, 'away_team': team2}
+    defaults = {'date': datetime.now(timezone.utc), 'home_score': 0, 'away_score': 0, 'home_team': team1, 'away_team': team2}
     match_obj = Match.objects.get_or_create(pk=match_spec['id'], defaults=defaults)[0]
-    match_obj.time = match_spec['time']
+    match_obj.date = match_spec['date']
     match_obj.venue = match_spec['venue']
     match_obj.home_score = match_spec['h_score']
     match_obj.away_score = match_spec['a_score']

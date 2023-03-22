@@ -1,0 +1,20 @@
+<header class="card mb-3">
+  <div class="card-header container">
+    <div class="row">
+      <img src="{{MEDIA_URL}}{{profile.icon}}" alt="{{profile.name}}'s icon" class="col-3"/>
+      <div class="col-7">
+        <h2>{{profile.name}}</h2>
+        {% if profile.type == 'team' %}
+          <p>{{supporter_count}} Supporters</p>
+          {% with match_data=profile.match_data %}
+            <p>
+              {{match_data.match_count}} Matches
+              ({{match_data.wins}} Wins, {{match_data.draws}} Draws, {{match_data.losses}} Losses)
+            </p>
+          {% endwith %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <p class="card-body" style="min-height: 10rem;">{{profile.bio}}</p>
+</header>

@@ -4,37 +4,33 @@
 {% block title_block %}
 	Team - {{team.name}}
 {% endblock %}
-	
+
 {% block body_block %}
-	<div class="position-relative">
-		<div class="image-container position-absolute top-0 start-0 end-0 bottom-0"></div>
-		<img src="{% static 'images/gutigers.jpg' %}" alt="Profile" class="position-absolute top-0 start-0 end-0 bottom-0 w-100 h-100" style = "opacity:0.4"/>
-		<div class="container position-relative" style = "background-color:transparent">
-			<div class="row justify-content-center flex-wrap">
-				<main class="col-lg-8">
-					<header class="card mb-3">
-						<div class="card-header py-3">
-							<div class="d-flex flex-row align-items-center">
-								<img src="{{MEDIA_URL}}{{team.icon}}" alt="{{team.name}}'s icon" class="rounded-circle me-3" width="80"/>
-								<div>
-									<h2 class="mb-0">{{team.name}}</h2>
-									<p class="text-muted">{{supporter_count}} Supporters</p>
-								</div>
-							</div>
-						</div>
-						<div class="card-body">
-							<p class="card-text">{{team.bio}}</p>
-						</div>
-					</header>
-					<section>{% include 'gutigers/components/comment-section.html' %}</section>
-				</main>
-				<aside class="card col-lg-4">
-					<div class="card-body">
-						<h3 class="card-title mb-3">Team News</h3>
-						{% lorem 1 b random %}
-					</div>
-				</aside>
-			</div>
+	<script defer="">{% include 'gutigers/components/comment.js' %}</script>
+	<div class="container">
+		<div class="row">
+			<main class="col-8">
+				{% include 'gutigers/components/profile-frame.html' with profile=profile %}
+				<section>{% include 'gutigers/components/comment-section.html' %}</section>
+			</main>
+			<aside class="card col-3">
+				<h3 class="card-header">Team News</h3>
+				<div class="card-body" style="height: 40rem; overflow: scroll;">
+				{% if posts %}
+                <ul>
+                    {% for post in posts %}
+                    	<h5><a href="{% url 'gutigers:post' post.pk %}" style="text-decoration:none">{{ post.title }}</a></h5>
+						<footer class="text-muted">{{ post.post_date }}</footer>
+						<hr/>
+                    {% endfor %}
+                </ul>
+           		{% else %}
+                	<p>No posts to show.</p>
+					<hr/>
+            	{% endif %}
+				<footer class="text-center text-muted">You have reach the end of all posts!</footer>
+				</div>
+			</aside>
 		</div>
 	</div>
 {% endblock %}

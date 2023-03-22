@@ -16,12 +16,12 @@ class Team(models.Model):
     goals_for = models.PositiveIntegerField(default=0)
     goals_against = models.PositiveIntegerField(default=0)
     points = models.PositiveIntegerField(default=0)
-    
+
     @property
     def goal_difference(self):
         return self.goals_for - self.goals_against
 
-  
+
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -31,16 +31,23 @@ class Team(models.Model):
         return self.name
 
 class Match(models.Model):
-    time = models.DateTimeField()
+    date = models.DateTimeField()
     venue = models.CharField(max_length=128)
     home_score = models.PositiveSmallIntegerField(null=True)
     away_score = models.PositiveSmallIntegerField(null=True)
+    home_diff_away_score = models.SmallIntegerField(default=0)
 
     home_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='+')
     away_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='+')
 
+    def save(self, *args, **kwargs):
+        self.home_diff_away_score = int(self.home_score > self.away_score)
+        if self.home_score < self.away_score: self.home_diff_away_score = -1
+        super(Match, self).save(*args, **kwargs)
+
+
     def __str__(self):
-        return f'{self.home_team} vs {self.away_team} @ {self.venue} {self.time}'
+        return f'{self.home_team} vs {self.away_team} @ {self.venue} {self.date}'
 
 class UserProfile(models.Model):
     url_slug = models.SlugField(primary_key=True, unique=True)
@@ -54,6 +61,7 @@ class UserProfile(models.Model):
 
     def save(self, *args, **kwargs):
         self.url_slug = slugify(self.user.username)
+
         super(UserProfile, self).save(*args, **kwargs)
 
     def __str__(self):
