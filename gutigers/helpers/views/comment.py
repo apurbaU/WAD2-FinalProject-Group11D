@@ -25,6 +25,9 @@ def comment_new(request, *, post_id):
 def comment_reply(request, *, comment_id, post_id=None):
     form = CommentForm()
     if request.method == 'POST':
+        profile = UserProfile.objects.get(user=request.user)
+        if post_id is not None and not Manager.objects.filter(user=profile).exists():
+            return redirect(reverse('gutigers:404'))
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)

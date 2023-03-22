@@ -1,0 +1,10 @@
+{% extends 'gutigers/base.html' %}
+
+
+{% block title_block %}
+	{{profile.type}} - {{profile.name}}
+{% endblock %}
+
+{% block body_block %}
+	{% include 'gutigers/components/profile-frame.html' %}
+{% endblock %}
