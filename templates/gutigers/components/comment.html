@@ -2,7 +2,7 @@
 
 {% if base or comment.children|length == 0 %}
   <article id="comment-main-{{comment.comment_id}}" class="card p-2 my-1"
-      onclick="return false;" style="cursor: default;">
+      onclick="return false;" style="cursor: default;" data-id="{{comment.comment_id}}">
     <div class="card-title">
       {% with author=comment.author faction=comment.author.faction %}
         <a href="{% url 'gutigers:user' comment.author.url_slug %}"
@@ -34,7 +34,7 @@
         </a>
       {% endif %}
     </div>
-    <div id="reply-{{comment.comment_id}}"></div>
+    <div id="reply-{{comment.comment_id}}" class="reply-box"></div>
   </article>
 {% else %}
   <details id="comment-expandable-{{comment.comment_id}}" class="comment-parent">

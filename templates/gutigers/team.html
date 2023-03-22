@@ -12,9 +12,23 @@
 				{% include 'gutigers/components/profile-frame.html' %}
 				<section>{% include 'gutigers/components/comment-section.html' %}</section>
 			</main>
-			<aside class="card col-4">
-				<h3 class="card-title">Team News</h3>
-				{% lorem 1 b random %}
+			<aside class="card col-3">
+				<h3 class="card-header">Team News</h3>
+				<div class="card-body" style="height: 40rem; overflow: scroll;">
+				{% if posts %}
+                <ul>
+                    {% for post in posts %}
+                    	<h5><a href="{% url 'gutigers:post' post.pk %}" style="text-decoration:none">{{ post.title }}</a></h5>
+						<footer class="text-muted">{{ post.post_date }}</footer>
+						<hr/>
+                    {% endfor %}
+                </ul>
+           		{% else %}
+                	<p>No posts to show.</p>
+					<hr/>
+            	{% endif %}
+				<footer class="text-center text-muted">You have reach the end of all posts!</footer>
+				</div>
 			</aside>
 		</div>
 	</div>
