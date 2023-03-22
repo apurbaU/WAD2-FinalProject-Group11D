@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 
-<html>
+<html lang ="en">
 	<head>
 		<title>
 			GuTigers -
@@ -20,7 +20,9 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 		<!--<link href="{% static 'styles.css' %}" rel="stylesheet">-->
+		{% block stylesheets %}
 		<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+		{% endblock %}
 		<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
 	</head>
 	
@@ -96,12 +98,11 @@
 			{% block sidebar_block %}
 			{% endblock %}
 		</div>
-		<hr />
 		<div>
 		</div>
 </div>
-<footer>
-    <div class="container-fluid">
+<footer class = "main_footer">
+    <div class="container-fluid" style = "margin-top:10px">
       <div class="row">
         <div class="col-md-6">
           <p class="text">&copy; GuTigers</p>

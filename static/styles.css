@@ -17,7 +17,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 10px;
+		padding: 5px;
 	}
 
 /* Style the links inside the navigation bar */
@@ -89,7 +89,7 @@
 		box-sizing: border-box;
 	}
 	
-	footer{
+	.main_footer{
 		position: absolute;
 		bottom: 0;
 		width: 100%;
@@ -99,28 +99,28 @@
 			
 	}
 		
-	footer a {
+	.main_footer a {
 		color: yellow;
 		text-decoration:none;
 	}
 	
-	footer p{
+	.main_footer p{
 		color:yellow;
 	}
 
-	footer a:hover {
+	.main_footer a:hover {
 		color: white !important;
 		text-decoration: underline;
 		color: #ccc;
 	}
 
 	@media (max-width: 767px) {
-		footer .list-inline-item {
+		.main_footer .list-inline-item {
 		display: block;
 		margin-bottom: 10px;
 		}
 	}
-
+	
 	.comment-expand-btn { font: 0.8em monospace; }
 	
 	.comment-options img {
