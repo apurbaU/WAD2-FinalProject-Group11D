@@ -1,14 +1,102 @@
-.comment-expand-btn { font: 0.8em monospace; }
-.comment-options img {
-    width: 1.5em;
-    height: 1.5em;
-}
+	body{
+		background-color:black;
+		margin:0;
+		padding:0;
+	}
+		
+/* Style the navigation bar */
+	.navbar {
+		background-color: black;
+		overflow: hidden;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px;
+	}
 
-.comment-parent { white-space: nowrap; }
-.comment-parent > ul {
-    margin-bottom: 0;
-    padding-left: 1em;
-    border-left: 3px dotted dimgray;
-}
-.comment-parent > summary, .comment-parent > ul > li { display: block; }
-.comment-parent ul li { list-style-type: none; }
+/* Style the links inside the navigation bar */
+	.navbar a {
+		color: yellow;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+		font-size: 18px;
+	}
+	
+	.navbar a:hover{
+		 color:  #87CEEB;
+		transition: all 0.2s ease-in-out;
+	}
+
+
+/* Style the login button */
+	.btn {
+		 background-color: yellow;
+		 color: black;
+		 border: none;
+		 margin-left: 10px;
+		 border-radius: 5px;
+		 font-weight: bold;
+		 transition: all 0.3s ease-in-out;
+	}
+	
+		
+	.btn span{
+		color: black;	
+		font-size:16px;
+		padding: 0;
+		margin:0;
+		}
+		
+		
+
+/* Style the login button when hovered over */
+	.btn:hover {
+		 background-color: #87CEEB;
+		 color: white;
+		 box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	}
+
+
+/* Style the image container */
+	.image-container img {
+		height: 100vh;
+		background-size: cover;
+		background-position: center;
+	}
+
+/* Style the website logo image */
+	.navbar-brand img {
+		max-height: 40px;
+		max-width: 100%;
+		object-fit: contain;
+	}
+		
+	.navbar-toggler{
+		background-color:yellow;
+		background-size:cover;
+	}
+			
+	.container {
+		background-color: black;
+		padding: 20px;
+		box-sizing: border-box;
+	}
+
+	.comment-expand-btn { font: 0.8em monospace; }
+	
+	.comment-options img {
+		width: 1.5em;
+		height: 1.5em;
+	}
+
+	.comment-parent { white-space: nowrap; }
+	
+	.comment-parent > ul {
+		margin-bottom: 0;
+		padding-left: 1em;
+		border-left: 3px dotted dimgray;
+	}
+	
+	.comment-parent > summary, .comment-parent > ul > li { display: block; }
+	.comment-parent ul li { list-style-type: none; }

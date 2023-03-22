@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 def index(request):
-    return render(request, 'gutigers/index.html')
+    return render(request, 'gutigers/index.html', context= {'upper_half' : True})
 
 def not_found(request, exception=None):
     return render(request, 'gutigers/404.html')
