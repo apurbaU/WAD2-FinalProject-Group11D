@@ -180,3 +180,66 @@
         #user_form input[type="submit"]:hover {
             background-color: #45a049;
         }
+		
+/*style for the 404 page*/
+
+	  .not-found-container {
+		margin-top: 10rem;
+		background-color: #f9f9f9;
+        border: 1px solid #ccc;
+		border-radius:5px;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		padding: 1rem;
+    }
+
+    .not-found-title {
+      font-size: 10rem;
+      color: #e74c3c;
+      margin-bottom: 0;
+    }
+
+    .not-found-text {
+      font-size: 2rem;
+      margin-top: 0;
+      margin-bottom: 3rem;
+    }
+	
+	.not-found-text a {
+		color: #007bff;
+		text-decoration: none;
+		border-bottom: 2px solid transparent;
+		transition: border-color 0.3s ease-in-out;
+	}
+
+	.not-found-text a:hover {
+		border-color: #007bff;
+	}
+
+	.not-found-text a::before {
+		content: "🏠";
+		display: inline-block;
+		margin-right: 0.5em;
+		transform: translateX(-1em);
+		opacity: 0;
+		transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+	}
+
+	.not-found-text a:hover::before {
+		transform: translateX(0);
+		opacity: 1;
+	}
+	
+
+	@keyframes animate404 {
+		0% { transform: rotate(0deg); }
+		25% { transform: rotate(20deg); }
+		50% { transform: rotate(-20deg); }
+		75% { transform: rotate(10deg); }
+		100% { transform: rotate(0deg); }
+	}
+
+	.not-found-title {
+		animation: animate404 1s ease-in-out infinite;
+	}

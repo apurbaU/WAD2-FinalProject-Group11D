@@ -1,13 +1,23 @@
 {% extends 'gutigers/base.html' %}
+{% load staticfiles %}
 
 {% block title_block %}
 	Not found
 {% endblock %}
-
 {% block body_block %}
-  <h1>404</h1>
-  <p>
-    Looks like you have been sent to the wrong place,
-    <a href="{% url 'gutigers:index' %}">return to homepage</a>?
-  </p>
+<div class="position-relative" style = "min-height: 100vh">
+		<div class="image-container position-absolute top-0 start-0 end-0 bottom-0"></div>
+		<img src="{% static 'images/gutigers.jpg' %}" alt="Profile" class="position-absolute top-0 start-0 end-0 bottom-0 w-100 h-100" style = "opacity:0.1"/>
+<div class="row justify-content-center">
+<div class="col-md-6">
+  <div class="not-found-container">
+    <h1 class="not-found-title">404</h1>
+    <p class="not-found-text">
+      Oops! You weren't supposed to see this.
+      <p class = "not-found-text"><a href="{% url 'gutigers:index' %}">Click here to go back home.</a></p>
+    </p>
+    <div class="not-found-img"></div>
+  </div>
+  </div>
+  </div>
 {% endblock %}
