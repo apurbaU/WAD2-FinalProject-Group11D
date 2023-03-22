@@ -17,6 +17,8 @@ def not_found(request, exception=None):
     return render(request, 'gutigers/404.html')
 
 def team_detail(request, *, team_name_slug):
+    post_list = Post.objects.order_by('-post_date')
+
     context_dict = {'post_id': -1, 'comments': list(map(CommentView,
                     Comment.objects.filter(about_post=None, replies_to=None)))}
     try: context_dict['team'] = Team.objects.get(url_slug=team_name_slug)
@@ -26,6 +28,7 @@ def team_detail(request, *, team_name_slug):
         Manager.objects.filter(user=UserProfile.objects.get(user=request.user)).exists())
     context_dict['supporter_count'] = (UserProfile.objects
                                        .filter(support_team=context_dict['team']).count())
+    context_dict['posts'] = post_list
     return render(request, 'gutigers/team.html', context=context_dict)
 
 def contact(request):
