@@ -13,7 +13,7 @@ from gutigers.models import Comment, Manager, Post, Team, UserProfile, Match
 
 def index(request):
     teams = Team.objects.all()
-    matches = Match.objects.filter(time__gt=timezone.now()).order_by('time')
+    matches = Match.objects.filter(date__gt=timezone.now()).order_by('date')
     teams = sorted(teams, key=lambda t: (-t.points, -t.goal_difference, -t.goals_for))
     return render(request, 'gutigers/index.html', context= {'upper_half' : True, 'teams': teams, 'matches': matches})
 
@@ -176,7 +176,7 @@ def create_match(request):
         return render(request, 'gutigers/create_match.html', {'teams': teams, 'form': form})
 
 def fixtures(request):
-    matches = Match.objects.filter(time__gt=timezone.now()).order_by('time')
+    matches = Match.objects.filter(date__gt=timezone.now()).order_by('date')
 
     return render(request, 'gutigers/fixtures.html', {'matches': matches})
 

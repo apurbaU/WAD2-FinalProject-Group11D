@@ -17,17 +17,16 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'password')
 
 class UserProfileForm(forms.ModelForm):
-
     class Meta:
         model = UserProfile
-        fields = ('avatar', 'display_name', 'team_supported')
+        fields = ('avatar', 'display_name', 'support_team')
 
 class SaveMatchForm(forms.ModelForm):
     class Meta:
         model = Match
-        fields = ['time', 'venue', 'home_team', 'away_team', 'home_score', 'away_score']
+        fields = ['date', 'venue', 'home_team', 'away_team', 'home_score', 'away_score']
         widgets = {
-            'time': forms.DateTimeInput(),
+            'date': forms.DateTimeInput(),
             'home_team': forms.Select(attrs={'class': 'selectpicker', 'data-live-search': 'true'}),
             'away_team': forms.Select(attrs={'class': 'selectpicker', 'data-live-search': 'true'}),
             'home_score': forms.NumberInput(attrs={'min': 0}),
@@ -37,9 +36,9 @@ class SaveMatchForm(forms.ModelForm):
 class CreateMatchForm(forms.ModelForm):
     class Meta:
         model = Match
-        fields = ['time', 'venue', 'home_team', 'away_team']
+        fields = ['date', 'venue', 'home_team', 'away_team']
         widgets = {
-            'time': forms.DateTimeInput(),
+            'date': forms.DateTimeInput(),
             'home_team': forms.Select(attrs={'class': 'selectpicker', 'data-live-search': 'true'}),
             'away_team': forms.Select(attrs={'class': 'selectpicker', 'data-live-search': 'true'}),
         }
