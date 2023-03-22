@@ -26,6 +26,7 @@
 	
 <body>
 	
+<div class = "page_content">
 	<!-- Navigation bar -->
 <nav class="navbar navbar-expand-lg">
   <a class="navbar-brand" href="{% url 'gutigers:index' %}">
@@ -98,6 +99,26 @@
 		<hr />
 		<div>
 		</div>
-	</body>
+</div>
+<footer>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="text">&copy; GuTigers</p>
+        </div>
+        <div class="col-md-6">
+          <ul class="list-inline text-md-right">
+            <li class="list-inline-item">
+              <a href="#" class="text">About</a>
+            </li>
+            <li class="list-inline-item">
+              <a href="{% url 'gutigers:contact' %}" class="text">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
 </html>
 

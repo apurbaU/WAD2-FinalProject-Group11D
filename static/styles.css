@@ -1,7 +1,13 @@
-	body{
+	html, body{
 		background-color:black;
 		margin:0;
 		padding:0;
+		position: relative;
+		min-height: 100vh;
+	}
+	
+	.page_content {
+		 padding-bottom: 2.5rem;
 	}
 		
 /* Style the navigation bar */
@@ -81,6 +87,38 @@
 		background-color: black;
 		padding: 20px;
 		box-sizing: border-box;
+	}
+	
+	footer{
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: 2.5rem; 
+		background-color: black !important;
+		border-top: 2px solid yellow;
+			
+	}
+		
+	footer a {
+		color: yellow;
+		text-decoration:none;
+	}
+	
+	footer p{
+		color:yellow;
+	}
+
+	footer a:hover {
+		color: white !important;
+		text-decoration: underline;
+		color: #ccc;
+	}
+
+	@media (max-width: 767px) {
+		footer .list-inline-item {
+		display: block;
+		margin-bottom: 10px;
+		}
 	}
 
 	.comment-expand-btn { font: 0.8em monospace; }
