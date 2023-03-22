@@ -61,6 +61,11 @@ function toggleReplyForm(commentId, url) {
     const replySection = document.getElementById('reply-' + commentId);
     const replyButton = document.getElementById('reply-btn-' + commentId);
     if (replySection.childElementCount === 0) {
+		const allReplySections = document.getElementsByClassName('reply-box');
+		for (const oneReplySection of allReplySections) {
+			if (oneReplySection.childElementCount !== 0)
+				collapseReplyForm(oneReplySection.parentElement.getAttribute('data-id'));
+		}
         request('GET', url, function (response) {
             if (response.status === 200) replySection.innerHTML = response.responseText;
             else if (response.status === 404) window.location.href = '{% url "gutigers:login" %}';
