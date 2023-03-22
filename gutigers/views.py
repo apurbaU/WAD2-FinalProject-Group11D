@@ -39,12 +39,15 @@ def comment_reply(request, *, comment_id):
     return render(request, 'gutigers/components/reply.html', context=context_dict)
 
 def team_detail(request, *, team_name_slug):
+    post_list = Post.objects.order_by('-post_date')
+
     context_dict = {'comments': list(map(CommentView,
                     Comment.objects.filter(about_post=None, replies_to=None)))}
     try: context_dict['team'] = Team.objects.get(url_slug=team_name_slug)
     except Team.DoesNotExist: redirect(reverse('gutigers:404'))
     context_dict['supporter_count'] = (UserProfile.objects
                                        .filter(support_team=context_dict['team']).count())
+    context_dict['posts'] = post_list
     return render(request, 'gutigers/team.html', context=context_dict)
 
 def contact(request):
