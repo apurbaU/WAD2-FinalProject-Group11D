@@ -24,6 +24,9 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
 		{% endblock %}
 		<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+		{% block extra_css %}
+		{% endblock %}
+		
 	</head>
 	
 <body>
@@ -97,8 +100,6 @@
 		<div>
 			{% block sidebar_block %}
 			{% endblock %}
-		</div>
-		<div>
 		</div>
 </div>
 <footer class = "main_footer">
