@@ -6,16 +6,31 @@ from datetime import date, datetime, timedelta, timezone
 import django
 from django.core.files.images import ImageFile
 from django.template.defaultfilters import slugify
+from realData import Tigers, Teams
 
 django.setup()
 from django.contrib.auth.models import User
 from gutigers.models import Comment, Manager, Match, Post, Team, UserProfile
 
 def populate():
-    t1 = populate_team({'name': 'GUTigers', 'icon': 'team_profile_images/GUTigers.jpg', 'bio': 'Bio of GUTigers'})
-    t2 = populate_team({'name': 'Other Team', 'icon': 'profile_images/MockUser.png', 'bio': 'Bio of other team'})
-    m1 = populate_match({'id': 1, 'date': datetime.now(timezone.utc), 'venue': 'Football field', 'h_score': 0, 'a_score': 3}, t1, t2)
-    m2 = populate_match({'id': 2, 'date': datetime.now(timezone.utc) + timedelta(days=100), 'venue': 'Baseball field', 'h_score': 2, 'a_score': 1}, t2, t1)
+    week1=datetime.date(2023, 08, 30)
+    t1 = populate_team({'name': Teams.names[0], 'icon': Teams.images[0], 'bio': Teams.bio[0]})
+    t2 = populate_team({'name': Teams.names[1], 'icon': Teams.images[1], 'bio': Teams.bio[1]})
+    t2 = populate_team({'name': Teams.names[2], 'icon': Teams.images[2], 'bio': Teams.bio[2]})
+    t2 = populate_team({'name': Teams.names[3], 'icon': Teams.images[3], 'bio': Teams.bio[3]})
+    t2 = populate_team({'name': Teams.names[4], 'icon': Teams.images[4], 'bio': Teams.bio[4]})
+
+    m1 = populate_match({'id': 1, 'date': week1 , 'venue': Team.home[0] 'h_score': 6, 'a_score': 20}, t0, t1)
+    m2 = populate_match({'id': 2, 'date': week1+timedelta(days=21) , 'venue': Team.home[4] 'h_score': 6, 'a_score': 6}, t4, t0)
+    m3 = populate_match({'id': 3, 'date': week1+timedelta(days=28), 'venue': Team.home[2] 'h_score': 0, 'a_score': 9}, t2, t0)
+    m4 = populate_match({'id': 4, 'date': week1+timedelta(days=35), 'venue': Team.home[0] 'h_score': 20, 'a_score': 6}, t1, t0)
+    m5 = populate_match({'id': 5, 'date': week1+timedelta(days=49) , 'venue': Team.home[0] 'h_score': 0, 'a_score': 21}, t0, t3)
+    m6 = populate_match({'id': 6, 'date': week1+timedelta(days=56) , 'venue': Team.home[0] 'h_score': 0, 'a_score': 0}, t0, t4)
+    m7 = populate_match({'id': 7, 'date': week1+timedelta(days=70) , 'venue': Team.home[3] 'h_score': 6, 'a_score': 9}, t3, t0)
+    m8 = populate_match({'id': 8, 'date': week1+timedelta(days=77) , 'venue': Team.home[0] 'h_score': 23, 'a_score': 6}, t0, t2)
+
+
+
     u1 = User.objects.get_or_create(username='john@example.org', password='Password1')[0]
     u2 = User.objects.get_or_create(username='connor@example.com', password='12345678')[0]
     up1 = populate_user_profile({'name': 'johnny', 'avatar': 'profile_images/placeholder.png', 'bio': 'John\'s bio', 'support': t1}, u1)

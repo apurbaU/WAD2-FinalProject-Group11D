@@ -118,7 +118,7 @@ def settings(request):
        
 
     profile=UserProfile.objects.get(pk=username_slug)
-
+    image=profile.avatar
     userform= ChangeForm(instance=profile)
 
 
@@ -143,5 +143,5 @@ def settings(request):
             
             print(userform.errors)
 
-    context_dict={'form':form,'userform':userform, 'is_manager':Manager.objects.filter(user=profile).exists()}
+    context_dict={'form':form,'userform':userform, 'is_manager':Manager.objects.filter(user=profile).exists(), 'image':image, 'profile':profile}
     return render(request, 'gutigers/settings.html', context=context_dict)

@@ -28,13 +28,19 @@
 
 		<h4>Change Account Info </h4>
 		<div>
-			<form id="UserForm" method="post" action="/gutigers/settings/">
+
+			
+			<form id="UserForm" method="post" action="/gutigers/settings/" enctype="multipart/form-data">
 			{% csrf_token %}
 			{% for hidden in userform.hidden_fields %}
 				{{ hidden }}
 			{% endfor %}
 			{% for field in userform.visible_fields %}
 				{{ field.errors }}
+				{% if field.label == "Avatar" and image %}
+				<img src={{MEDIA_URL}}{{image}} alt="Avatar"/>
+				<br></br>
+				{% endif %}
 				{{ field.label }}
 				{{ field }}
 				<br></br>
