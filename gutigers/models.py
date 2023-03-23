@@ -15,7 +15,7 @@ class Team(models.Model):
     lost = models.PositiveIntegerField(default=0)
     goals_for = models.PositiveIntegerField(default=0)
     goals_against = models.PositiveIntegerField(default=0)
-    points = models.PositiveIntegerField(default=0)
+    points = models.FloatField(default=0)
 
     @property
     def goal_difference(self):

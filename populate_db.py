@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'gutigers_project.settings')
 
@@ -6,53 +6,69 @@ from datetime import date, datetime, timedelta, timezone
 import django
 from django.core.files.images import ImageFile
 from django.template.defaultfilters import slugify
-from realData import Tigers, Teams
+from realData import Teams
 
 django.setup()
 from django.contrib.auth.models import User
 from gutigers.models import Comment, Manager, Match, Post, Team, UserProfile
 
 def populate():
-<<<<<<< HEAD
-    week1=datetime.date(2023, 08, 30)
-    t1 = populate_team({'name': Teams.names[0], 'icon': Teams.images[0], 'bio': Teams.bio[0]})
-    t2 = populate_team({'name': Teams.names[1], 'icon': Teams.images[1], 'bio': Teams.bio[1]})
-    t2 = populate_team({'name': Teams.names[2], 'icon': Teams.images[2], 'bio': Teams.bio[2]})
-    t2 = populate_team({'name': Teams.names[3], 'icon': Teams.images[3], 'bio': Teams.bio[3]})
-    t2 = populate_team({'name': Teams.names[4], 'icon': Teams.images[4], 'bio': Teams.bio[4]})
+    week1=date(2022, 8, 30)
+    week9=date(2023, 1, 15)
+    t0 = populate_team({'name': Teams.names[0], 'icon': Teams.images[0], 'bio': Teams.bios[0],'won':4,'drawn':2,'lost':2})
+    t1 = populate_team({'name': Teams.names[1], 'icon': Teams.images[1], 'bio': Teams.bios[1],'won':8,'drawn':0,'lost':0})
+    t2 = populate_team({'name': Teams.names[2], 'icon': Teams.images[2], 'bio': Teams.bios[2],'won':3,'drawn':0,'lost':5})
+    t3 = populate_team({'name': Teams.names[3], 'icon': Teams.images[3], 'bio': Teams.bios[3],'won':2,'drawn':0,'lost':6})
+    t4 = populate_team({'name': Teams.names[4], 'icon': Teams.images[4], 'bio': Teams.bios[4],'won':1,'drawn':2,'lost':5})
 
-    m1 = populate_match({'id': 1, 'date': week1 , 'venue': Team.home[0] 'h_score': 6, 'a_score': 20}, t0, t1)
-    m2 = populate_match({'id': 2, 'date': week1+timedelta(days=21) , 'venue': Team.home[4] 'h_score': 6, 'a_score': 6}, t4, t0)
-    m3 = populate_match({'id': 3, 'date': week1+timedelta(days=28), 'venue': Team.home[2] 'h_score': 0, 'a_score': 9}, t2, t0)
-    m4 = populate_match({'id': 4, 'date': week1+timedelta(days=35), 'venue': Team.home[0] 'h_score': 20, 'a_score': 6}, t1, t0)
-    m5 = populate_match({'id': 5, 'date': week1+timedelta(days=49) , 'venue': Team.home[0] 'h_score': 0, 'a_score': 21}, t0, t3)
-    m6 = populate_match({'id': 6, 'date': week1+timedelta(days=56) , 'venue': Team.home[0] 'h_score': 0, 'a_score': 0}, t0, t4)
-    m7 = populate_match({'id': 7, 'date': week1+timedelta(days=70) , 'venue': Team.home[3] 'h_score': 6, 'a_score': 9}, t3, t0)
-    m8 = populate_match({'id': 8, 'date': week1+timedelta(days=77) , 'venue': Team.home[0] 'h_score': 23, 'a_score': 6}, t0, t2)
+    m1 = populate_match({'id': 1, 'date': week1 , 'venue': Teams.home[0], 'h_score': 6, 'a_score': 20}, t0, t1)
+    m2 = populate_match({'id': 2, 'date': week1+timedelta(days=21) , 'venue': Teams.home[4], 'h_score': 6, 'a_score': 6}, t4, t0)
+    m3 = populate_match({'id': 3, 'date': week1+timedelta(days=28), 'venue': Teams.home[2], 'h_score': 0, 'a_score': 9}, t2, t0)
+    m4 = populate_match({'id': 4, 'date': week1+timedelta(days=35), 'venue': Teams.home[1], 'h_score': 20, 'a_score': 6}, t1, t0)
+    m5 = populate_match({'id': 5, 'date': week9 , 'venue': Teams.home[0], 'h_score': 0, 'a_score': 21}, t0, t3)
+    m6 = populate_match({'id': 6, 'date': week9+timedelta(days=7) , 'venue': Teams.home[0], 'h_score': 0, 'a_score': 0}, t0, t4)
+    m7 = populate_match({'id': 7, 'date': week9+timedelta(days=21) , 'venue': Teams.home[3], 'h_score': 6, 'a_score': 9}, t3, t0)
+    m8 = populate_match({'id': 8, 'date': week9+timedelta(days=28) , 'venue': Teams.home[0], 'h_score': 23, 'a_score': 6}, t0, t2)
+
+    m9 = populate_match({'id': 9, 'date': week1+timedelta(days=7) , 'venue': Teams.home[1], 'h_score': 28, 'a_score': 10}, t1, t2)
+    m10 = populate_match({'id': 10, 'date': week1+timedelta(days=14) , 'venue': Teams.home[4], 'h_score': 0, 'a_score': 28}, t4, t1)
+    m11 = populate_match({'id': 11, 'date': week1+timedelta(days=21) , 'venue': Teams.home[1], 'h_score': 48, 'a_score': 0}, t1, t3)
+    m12= populate_match({'id': 12, 'date': week9+timedelta(days=14) , 'venue': Teams.home[3], 'h_score': 7, 'a_score': 42}, t3, t1)
+    m13= populate_match({'id': 13, 'date': week9+timedelta(days=21) , 'venue': Teams.home[2], 'h_score': 8, 'a_score': 28}, t2, t1)
+    m14= populate_match({'id': 14, 'date': week9+timedelta(days=28) , 'venue': Teams.home[1], 'h_score': 55, 'a_score': 0}, t1, t4)
+
+    m15 = populate_match({'id': 15, 'date': week1, 'venue': Teams.home[3], 'h_score': 6, 'a_score': 18}, t3, t2)
+    m16= populate_match({'id': 16, 'date': week1+timedelta(days=42), 'venue': Teams.home[2], 'h_score': 6, 'a_score': 14}, t2, t4)
+    m17= populate_match({'id': 17, 'date': week9+timedelta(days=7), 'venue': Teams.home[2], 'h_score': 20, 'a_score': 0}, t2, t0)
+    m18= populate_match({'id': 18, 'date': week9+timedelta(days=14), 'venue': Teams.home[4], 'h_score': 6, 'a_score': 24}, t4, t2)
+
+    m19= populate_match({'id': 19, 'date': week1+timedelta(days=7), 'venue': Teams.home[4], 'h_score': 6, 'a_score': 8}, t4, t3)
+    m20= populate_match({'id': 20, 'date': week1+timedelta(days=42), 'venue': Teams.home[3],'h_score': 20, 'a_score': 15}, t3, t4)
+
+    m20= populate_match({'id': 20, 'date': week1+timedelta(days=42), 'venue': Teams.home[3],'h_score': 20, 'a_score': 15}, t3, t4)
 
 
-
-=======
-    t1 = populate_team({'name': 'GUTigers', 'icon': 'team_profile_images/GUTigers.jpg', 'bio': 'Bio of GUTigers'})
-    t2 = populate_team({'name': 'Other Team', 'icon': 'profile_images/placeholder.png', 'bio': 'Bio of other team'})
-    m1 = populate_match({'id': 1, 'date': datetime.now(timezone.utc), 'venue': 'Football field', 'h_score': 0, 'a_score': 3}, t1, t2)
-    m2 = populate_match({'id': 2, 'date': datetime.now(timezone.utc) + timedelta(days=100), 'venue': 'Baseball field', 'h_score': 2, 'a_score': 1}, t2, t1)
->>>>>>> 6855a65b9c722059e70bae032dd5e90cbcdfa444
     u1 = User.objects.get_or_create(username='john@example.org', password='Password1')[0]
     u2 = User.objects.get_or_create(username='connor@example.com', password='12345678')[0]
     up1 = populate_user_profile({'name': 'johnny', 'avatar': 'profile_images/placeholder.png', 'bio': 'John\'s bio', 'support': t1}, u1)
-    up2 = populate_user_profile({'name': 'manager', 'avatar': 'team_profile_images/GUTigers.jpg', 'bio': 'Connor\'s bio', 'work': t2}, u2)
-    man1 = populate_manager('CEO', up2, [t1, t2])
-    p1 = populate_post(1, "Post title", "Post body", date.today())
-    c1 = populate_comment({'id': 1, 'body': 'Comment body 1', 'rating': 8627}, up2, p1, None)
-    c2 = populate_comment({'id': 2, 'body': 'Comment body 2'}, up1, p1, c1)
-    c3 = populate_comment({'id': 3, 'body': 'Comment body 3'}, up2, None, None)
+    up2 = populate_user_profile({'name': 'Charlie', 'avatar': 'team_profile_images/GUTigers.jpg', 'bio': "Manager of the GUTigers", 'work': t2}, u2)
+    man1 = populate_manager('President', up2, [t0])
+    p1 = populate_post(1, "Tigers Lose in Last 16", "On sunday the GUTigers lost in an exciting game away from home against the NTU Renegades 24-9. After a early 2 touchdowns form NTU tigers got their own back and looked to be coming into the game until some porr performances on special teams allowed NTU to return a punt and put the game to bed", date(2023,3,27))
+    c1 = populate_comment({'id': 1, 'body': 'Good effort from the boys we will get back here next year for sure', 'rating': 87}, up2, p1, None)
+    c2 = populate_comment({'id': 2, 'body': 'Too right we can build on this for next year'}, up1, p1, c1)
+    c3 = populate_comment({'id': 3, 'body': 'Come On Tigers'}, up2, None, None)
 
 def populate_team(team_spec):
     team = Team.objects.get_or_create(url_slug=slugify(team_spec['name']))[0]
     team.name = team_spec['name']
     team.icon = team_spec['icon']
     team.bio = team_spec['bio']
+    team.played= 8
+    team.won= team_spec['won']
+    team.drawn= team_spec['drawn']
+    team.lost= team_spec['lost']
+    team.points=team.won/8
+
     team.save()
     return team
 
@@ -108,4 +124,4 @@ def populate_comment(comment_spec, user, about, replies_to):
     return comment
 
 if __name__ == '__main__':
-	populate()
+    populate()
