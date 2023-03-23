@@ -25,4 +25,5 @@ urlpatterns = [
     path('comment/<post_id>/new/', comment.comment_new, name='comment_new'),
     path('comment/<int:comment_id>/', comment.comment, name='comment'),
     path('comment/<comment_id>/reply/', comment.comment_reply, name='comment_reply'),
+    path('comment/<int:comment_id>/vote/', comment.comment_vote, name='comment_vote'),
 ]
