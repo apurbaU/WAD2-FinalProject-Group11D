@@ -13,6 +13,7 @@ from django.contrib.auth.models import User
 from gutigers.models import Comment, Manager, Match, Post, Team, UserProfile
 
 def populate():
+<<<<<<< HEAD
     week1=datetime.date(2023, 08, 30)
     t1 = populate_team({'name': Teams.names[0], 'icon': Teams.images[0], 'bio': Teams.bio[0]})
     t2 = populate_team({'name': Teams.names[1], 'icon': Teams.images[1], 'bio': Teams.bio[1]})
@@ -31,6 +32,12 @@ def populate():
 
 
 
+=======
+    t1 = populate_team({'name': 'GUTigers', 'icon': 'team_profile_images/GUTigers.jpg', 'bio': 'Bio of GUTigers'})
+    t2 = populate_team({'name': 'Other Team', 'icon': 'profile_images/placeholder.png', 'bio': 'Bio of other team'})
+    m1 = populate_match({'id': 1, 'date': datetime.now(timezone.utc), 'venue': 'Football field', 'h_score': 0, 'a_score': 3}, t1, t2)
+    m2 = populate_match({'id': 2, 'date': datetime.now(timezone.utc) + timedelta(days=100), 'venue': 'Baseball field', 'h_score': 2, 'a_score': 1}, t2, t1)
+>>>>>>> 6855a65b9c722059e70bae032dd5e90cbcdfa444
     u1 = User.objects.get_or_create(username='john@example.org', password='Password1')[0]
     u2 = User.objects.get_or_create(username='connor@example.com', password='12345678')[0]
     up1 = populate_user_profile({'name': 'johnny', 'avatar': 'profile_images/placeholder.png', 'bio': 'John\'s bio', 'support': t1}, u1)

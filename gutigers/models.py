@@ -1,12 +1,27 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
+from datetime import datetime
+
 
 class Team(models.Model):
     url_slug = models.SlugField(primary_key=True, unique=True)
     name = models.CharField(max_length=128)
     icon = models.ImageField(upload_to='team_profile_images')
     bio = models.CharField(max_length=4096)
+    played = models.PositiveIntegerField(default=0)
+    won = models.PositiveIntegerField(default=0)
+    drawn = models.PositiveIntegerField(default=0)
+    lost = models.PositiveIntegerField(default=0)
+    goals_for = models.PositiveIntegerField(default=0)
+    goals_against = models.PositiveIntegerField(default=0)
+    points = models.PositiveIntegerField(default=0)
+
+    @property
+    def goal_difference(self):
+        return self.goals_for - self.goals_against
+
+
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -17,7 +32,7 @@ class Team(models.Model):
 
 class Match(models.Model):
     date = models.DateTimeField()
-    venue= models.CharField(max_length=128)
+    venue = models.CharField(max_length=128)
     home_score = models.PositiveSmallIntegerField(null=True)
     away_score = models.PositiveSmallIntegerField(null=True)
     home_diff_away_score = models.SmallIntegerField(default=0)
@@ -46,7 +61,7 @@ class UserProfile(models.Model):
 
     def save(self, *args, **kwargs):
         self.url_slug = slugify(self.user.username)
-       
+
         super(UserProfile, self).save(*args, **kwargs)
 
     def __str__(self):
