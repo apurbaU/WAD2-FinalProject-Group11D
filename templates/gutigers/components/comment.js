@@ -15,6 +15,13 @@ function collapseReplyForm(commentId) {
     replyButton.src = '{% static "images/comment/reply.png" %}';
 }
 
+function rate(commentId, ratingUrl, direction) {
+    request('POST', ratingUrl, function (response) {
+        if (response.status != 200) window.location.href = '{% url "gutigers:login" %}';
+        else document.getElementById('rating-count-' + commentId).innerHTML = response.responseText;
+    }).send('direction=' + direction);
+}
+
 function submitForm(commentId, commentUrl) {
     const cancelRedirectFrame = document.getElementById('cancel-redirect-' + commentId);
     const replyForm = document.getElementById('reply-form-' + commentId);
@@ -80,5 +87,6 @@ function request(method, url, callback) {
         if (this.readyState === 4) callback(this);
     };
     request.open(method, url, true);
+    if (method === 'POST') request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     return request;
 }

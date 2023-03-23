@@ -14,7 +14,6 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
     path('register/', views.register, name='register'),
-    path('result/', views.result, name='result'),
     path('league_table/', views.league_table, name= 'league_table'),
     path('fixtures/', views.fixtures, name='fixtures'),
     path('fixtures/save/', views.save_match, name='save_match'),
@@ -25,4 +24,5 @@ urlpatterns = [
     path('comment/<post_id>/new/', comment.comment_new, name='comment_new'),
     path('comment/<int:comment_id>/', comment.comment, name='comment'),
     path('comment/<comment_id>/reply/', comment.comment_reply, name='comment_reply'),
+    path('comment/<int:comment_id>/vote/', comment.comment_vote, name='comment_vote'),
 ]

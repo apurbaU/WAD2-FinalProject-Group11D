@@ -2,9 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 from gutigers.forms import CommentForm
 from gutigers.helpers.comment import CommentView
-from gutigers.models import Comment, Manager, Post, UserProfile
+from gutigers.models import Comment, CommentVote, Manager, Post, UserProfile
 from http import HTTPStatus
 
 def comment(request, *, comment_id):
@@ -17,16 +18,16 @@ def comment_new(request, *, post_id):
     try: post_id = int(post_id)
     except ValueError: return redirect(reverse('gutigers:404'))
     profile = UserProfile.objects.get(user=request.user)
-    if not Manager.objects.filter(user=profile).exists():
+    if post_id == -1 and not Manager.objects.filter(user=profile).exists():
         return redirect(reverse('gutigers:404'))
     return comment_reply(request, comment_id='new', post_id=post_id)
 
-@login_required
 def comment_reply(request, *, comment_id, post_id=None):
+    if not request.user.is_authenticated: return HttpResponse(status=HTTPStatus.FORBIDDEN)
     form = CommentForm()
     if request.method == 'POST':
         profile = UserProfile.objects.get(user=request.user)
-        if post_id is not None and not Manager.objects.filter(user=profile).exists():
+        if post_id == -1 and not Manager.objects.filter(user=profile).exists():
             return redirect(reverse('gutigers:404'))
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -57,3 +58,27 @@ def comment_reply(request, *, comment_id, post_id=None):
 
     context_dict = {'comment_id': comment_id, 'comment_url': comment_url, 'action_url': action_url, 'form': form}
     return render(request, 'gutigers/components/reply.html', context=context_dict)
+
+@csrf_exempt
+def comment_vote(request, *, comment_id):
+    if not request.user.is_authenticated: return HttpResponse(status=HTTPStatus.FORBIDDEN)
+    comment = Comment.objects.filter(pk=comment_id).first()
+    if (request.method != 'POST' or (vote_direction := request.POST.get('direction')) is None or
+        vote_direction not in ('positive', 'negative') or comment is None):
+        return HttpResponse(status=HTTPStatus.FORBIDDEN)
+    profile = UserProfile.objects.get(user=request.user)
+    is_positive = vote_direction == 'positive'
+    if (vote := CommentVote.objects.filter(user=profile, comment=comment).first()) is None:
+        comment.rating += 1 if is_positive else -1
+        CommentVote(user=profile, positive=is_positive, comment=comment).save()
+    elif vote.positive == is_positive:
+        comment.rating += -1 if is_positive else 1
+        vote.delete()
+    else:
+        comment.rating += 2 if is_positive else -2
+        vote.positive = is_positive
+        vote.save()
+    comment.save()
+    rating_color = CommentView(comment).rating_color()
+    return HttpResponse(f'<span style="color: {rating_color}">({comment.rating})</span>',
+                        status=HTTPStatus.OK)

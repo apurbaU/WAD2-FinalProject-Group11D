@@ -5,7 +5,7 @@
       onclick="return false;" style="cursor: default;" data-id="{{comment.comment_id}}">
     <div class="card-title">
       {% with author=comment.author faction=comment.author.faction %}
-        <a href="{% url 'gutigers:user' comment.author.url_slug %}"
+        <a href="#" onclick="window.location.href = '{% url 'gutigers:user' comment.author.url_slug %}'"
             style="text-decoration: none;">
           <img src="{{MEDIA_URL}}{{comment.author.avatar}}" alt="{{author.name}}'s avatar"
               class="h5" style="width: 1em; height: 1em;"/>
@@ -15,13 +15,24 @@
           {{faction.name}} {{faction.type}}
         </span>
       {% endwith %}
-      <span style="color: {{comment.rating_color}}">({{comment.rating}})</span>
+      <span id="rating-count-{{comment.comment_id}}" style="color: {{comment.rating_color}}">
+        ({{comment.rating}})
+      </span>
     </div>
     <p class="card-body p-0">{{comment.body}}</p>
     <div class="comment-options">
-      <img src="{% static 'images/comment/arrow_up.png' %}" alt="Vote up icon"/>
-      <img src="{% static 'images/comment/arrow_up.png' %}" alt="Vote down icon"
-          style="transform: rotate(180deg)"/>
+      <a href="#" onclick="rate('{{comment.comment_id}}',
+          '{% url 'gutigers:comment_vote' comment.comment_id %}', 'positive')"
+          style="text-decoration: none; color: black;">
+        <span id="vote-up-{{comment.comment_id}}"
+            style="position: relative; top: 0.5rem; font-size: 2rem">↑</span>
+      </a>
+      <a href="#" onclick="rate('{{comment.comment_id}}',
+          '{% url 'gutigers:comment_vote' comment.comment_id %}', 'negative')"
+          style="text-decoration: none; color: black;">
+        <span id="vote-down-{{comment.comment_id}}"
+            style="position: relative; top: 0.5rem; font-size: 2rem">↓</span>
+      </a>
       <a href="#" onclick="toggleReplyForm('{{comment.comment_id}}',
           '{% url 'gutigers:comment_reply' comment.comment_id %}');" style="text-decoration: none;">
         <img id="reply-btn-{{comment.comment_id}}" src="{% static 'images/comment/reply.png' %}"
