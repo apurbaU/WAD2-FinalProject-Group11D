@@ -2,11 +2,12 @@
 
 
 {% block title_block %}
-	Posts
+	Post
 {% endblock %}
 
 {% block body_block %}
 
+<script defer="">{% include 'gutigers/components/comment.js' %}</script>
 <div class="container">
 			<article class="card mb-3">
 				<div class="card-header container">
@@ -15,6 +16,7 @@
 				</div>
 				<p class="card-body" style="min-height: 10rem;">{{ post.body }}</p>
 			</article>
+			<section>{% include 'gutigers/components/comment-section.html' %}</section>
 </div>
 
 {% endblock %}

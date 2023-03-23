@@ -40,8 +40,11 @@ def contact(request):
     return render(request, 'gutigers/contact.html')
 
 def post(request, *, post_id):
-    try: context_dict = {'post': Post.objects.get(pk=post_id)}
+    try: context_dict = {'post_id': post_id, 'post': Post.objects.get(pk=post_id)}
     except Post.DoesNotExist: return redirect(reverse('gutigers:404'))
+    context_dict['comments'] = list(map(CommentView, Comment.objects.filter(
+                                    about_post=context_dict['post'], replies_to=None)))
+    context_dict['new_right'] = request.user.is_authenticated
     return render(request, 'gutigers/post.html', context=context_dict)
 
 def login(request):
@@ -100,9 +103,6 @@ def register(request):
                     context = {'user_form': user_form,
                                 'profile_form': profile_form,
                                 'registered': registered})
-
-def result(request):
-    return render(request, 'gutigers/result.html')
 
 def user(request, *, username_slug):
     try: context_dict = {'profile': ProfileView(UserProfile.objects.get(url_slug=username_slug))}

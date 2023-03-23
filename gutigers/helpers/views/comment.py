@@ -18,7 +18,7 @@ def comment_new(request, *, post_id):
     try: post_id = int(post_id)
     except ValueError: return redirect(reverse('gutigers:404'))
     profile = UserProfile.objects.get(user=request.user)
-    if not Manager.objects.filter(user=profile).exists():
+    if post_id == -1 and not Manager.objects.filter(user=profile).exists():
         return redirect(reverse('gutigers:404'))
     return comment_reply(request, comment_id='new', post_id=post_id)
 
@@ -27,7 +27,7 @@ def comment_reply(request, *, comment_id, post_id=None):
     form = CommentForm()
     if request.method == 'POST':
         profile = UserProfile.objects.get(user=request.user)
-        if post_id is not None and not Manager.objects.filter(user=profile).exists():
+        if post_id == -1 and not Manager.objects.filter(user=profile).exists():
             return redirect(reverse('gutigers:404'))
         form = CommentForm(request.POST)
         if form.is_valid():

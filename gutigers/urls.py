@@ -14,7 +14,6 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
     path('register/', views.register, name='register'),
-    path('result/', views.result, name='result'),
     path('league_table/', views.league_table, name= 'league_table'),
     path('fixtures/', views.fixtures, name='fixtures'),
     path('fixtures/save/', views.save_match, name='save_match'),
