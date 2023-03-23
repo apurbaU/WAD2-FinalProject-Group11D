@@ -8,13 +8,14 @@ from django.urls import reverse
 from django.utils import timezone
 from gutigers.forms import CommentForm, MatchForm, UserForm, UserProfileForm, ChangeForm, SaveMatchForm, CreateMatchForm
 from gutigers.helpers.comment import CommentView
+from gutigers.helpers.match import TeamMatchDataView
 from gutigers.helpers.profile import ProfileView
 from gutigers.models import Comment, Manager, Post, Team, UserProfile, Match
 
 def index(request):
-    teams = Team.objects.all()
+    teams = map(lambda t: TeamMatchDataView(t), Team.objects.all())
     matches = Match.objects.filter(date__gt=timezone.now()).order_by('date')
-    teams = sorted(teams, key=lambda t: (-t.points, -t.goal_difference, -t.goals_for))
+    teams = sorted(teams, key=lambda t: (-(t.wins() - t.losses()), -t.goal_diff(), -t.goals_for()))
     return render(request, 'gutigers/index.html', context= {'upper_half' : True, 'teams': teams, 'matches': matches})
 
 def not_found(request, exception=None):
@@ -40,8 +41,11 @@ def contact(request):
     return render(request, 'gutigers/contact.html')
 
 def post(request, *, post_id):
-    try: context_dict = {'post': Post.objects.get(pk=post_id)}
+    try: context_dict = {'post_id': post_id, 'post': Post.objects.get(pk=post_id)}
     except Post.DoesNotExist: return redirect(reverse('gutigers:404'))
+    context_dict['comments'] = list(map(CommentView, Comment.objects.filter(
+                                    about_post=context_dict['post'], replies_to=None)))
+    context_dict['new_right'] = request.user.is_authenticated
     return render(request, 'gutigers/post.html', context=context_dict)
 
 def login(request):
@@ -101,17 +105,14 @@ def register(request):
                                 'profile_form': profile_form,
                                 'registered': registered})
 
-def result(request):
-    return render(request, 'gutigers/result.html')
-
 def user(request, *, username_slug):
     try: context_dict = {'profile': ProfileView(UserProfile.objects.get(url_slug=username_slug))}
     except UserProfile.DoesNotExist: return redirect(reverse('gutigers:404'))
     return render(request, 'gutigers/profile.html', context=context_dict)
 
 def league_table(request):
-    teams = Team.objects.all()
-    teams = sorted(teams, key=lambda t: (-t.points, -t.goal_difference, -t.goals_for))
+    teams = list(map(lambda t: TeamMatchDataView(t), Team.objects.all()))
+    teams = sorted(teams, key=lambda t: (-(t.wins() - t.losses()), -t.goal_diff(), -t.goals_for()))
     print(teams)
     return render(request, 'gutigers/league_table.html', {'teams': teams})
 
@@ -122,35 +123,6 @@ def save_match(request):
         if form.is_valid():
             # Save the form data to a new Match object
             match = form.save()
-
-            # Update the associated Team objects based on the match results
-            home_team = match.home_team
-            away_team = match.away_team
-
-            home_team.played += 1
-            away_team.played += 1
-
-            home_team.goals_for += match.home_score
-            home_team.goals_against += match.away_score
-            away_team.goals_for += match.away_score
-            away_team.goals_against += match.home_score
-
-            if match.home_score > match.away_score:
-                home_team.won += 1
-                away_team.lost += 1
-                home_team.points += 3
-            elif match.home_score < match.away_score:
-                home_team.lost += 1
-                away_team.won += 1
-                away_team.points += 3
-            else:
-                home_team.drawn += 1
-                away_team.drawn += 1
-                home_team.points += 1
-                away_team.points += 1
-
-            home_team.save()
-            away_team.save()
 
             return HttpResponse("Match Saved")
         else:

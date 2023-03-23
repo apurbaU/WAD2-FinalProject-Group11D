@@ -32,14 +32,14 @@
                 <tr class="{% cycle 'even' 'odd' %}">
                   <td>{{ forloop.counter }}</td>
                   <td>{{ team.name }}</td>
-                  <td>{{ team.played }}</td>
-                  <td>{{ team.won }}</td>
-                  <td>{{ team.drawn }}</td>
-                  <td>{{ team.lost }}</td>
+                  <td>{{ team.match_count }}</td>
+                  <td>{{ team.wins }}</td>
+                  <td>{{ team.draws }}</td>
+                  <td>{{ team.losses }}</td>
                   <td>{{ team.goals_for }}</td>
                   <td>{{ team.goals_against }}</td>
-                  <td>{{ team.goal_difference }}</td>
-                  <td>{{ team.points }}</td>
+                  <td>{{ team.goal_diff }}</td>
+                  <td>{{ team.win_ratio }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
