@@ -28,6 +28,7 @@ class TeamMatchDataView():
     def win_ratio(self):
         return round(self.wins()/self.match_count(), 2)
 
+    def url_slug(self): return self.team_orm.url_slug
 
     def match_diff(self, score_diff: int):
         home = Match.objects.filter(home_team=self.team_orm, home_diff_away_score=score_diff).count()
