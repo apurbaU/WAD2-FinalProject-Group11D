@@ -6,7 +6,7 @@
     <div class="image-container position-absolute top-0 start-0 end-0 bottom-0"></div>
     <img src="{% static 'images/gutigers.jpg' %}" alt="Profile" class="position-absolute top-0 start-0 end-0 bottom-0 w-100 h-100" style="opacity:0.2"/>
 {% block table %}
-  {% if matches %}
+  {% if matches or old_matches %}
     <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-md-10 col-lg-8" style="margin-top: 5em;">
@@ -18,6 +18,18 @@
 				</tr>
               </thead>
               <tbody>
+              {% for match in old_matches %}
+                <tr>
+                  <td class = "match-time">{{ match.time|date:'F d, Y' }}</td>
+                </tr>
+                <tr>
+                  <td class = "full_fixture">
+                    {{ match.home_team.name }} <img src="{{ match.home_team.icon.url }}" alt="{{ match.home_team.name }} icon" width="25" height="25">
+                    <span style="font-size: 1.5rem; top: 0.2rem; position: relative;">{{ match.home_score }} - {{ match.away_score }}</span>
+                    <img src="{{ match.away_team.icon.url }}" alt="{{ match.away_team.name }} icon" width="25" height="25"> {{ match.away_team.name }}
+                  </td>
+                </tr>
+              {% endfor %}
               {% for match in matches %}
                 <tr>
                   <td class = "match-time">{{ match.date|date:'F d, Y' }}</td>

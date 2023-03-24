@@ -1,5 +1,5 @@
 {% block body_block %}
-	{% if matches %}
+	{% if matches or old_matches %}
         <div class="table-responsive">
             <table class="table" id="fixtures-table">
               <thead>
@@ -8,6 +8,18 @@
 				</tr>
               </thead>
               <tbody>
+              {% for match in old_matches %}
+                <tr>
+                  <td class = "match-time">{{ match.time|date:'F d, Y' }}</td>
+                </tr>
+                <tr>
+                  <td class = "full_fixture">
+                    {{ match.home_team.name }} <img src="{{ match.home_team.icon.url }}" alt="{{ match.home_team.name }} icon" width="25" height="25">
+                    <span style="font-size: 1.5rem; top: 0.2rem; position: relative;">{{ match.home_score }} - {{ match.away_score }}</span>
+                    <img src="{{ match.away_team.icon.url }}" alt="{{ match.away_team.name }} icon" width="25" height="25"> {{ match.away_team.name }}
+                  </td>
+                </tr>
+              {% endfor %}
               {% for match in matches %}
                 <tr>
                   <td class = "match-time">{{ match.time|date:'F d, Y' }}</td>
