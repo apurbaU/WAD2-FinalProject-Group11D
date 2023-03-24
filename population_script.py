@@ -56,7 +56,7 @@ def populate():
     u1 = User.objects.get_or_create(username='john@example.org', password='Password1')[0]
     u2 = User.objects.get_or_create(username='aidan@example.com', password='12345678')[0]
     u3 = User.objects.get_or_create(username='brian@example.com', password='12345678')[0]
-    u4 = User.objects.get_or_create(username='charlie@example.com', password='12345678')[0]
+    u4 = User.objects.get_or_create(username='charlie@example.com', password='pbkdf2_sha256$150000$FPTzHLtOQD0L$mZEM/8BomJDL6iY71/gTMtO3rL/phwVJrBj8qIBGye4=')[0]
     up1 = populate_user_profile({'name': 'Johnny', 'avatar': 'profile_images/Johnny.png', 'bio': 'QB for Glasgow Tigers', 'support': t0}, u1)
     up2 = populate_user_profile({'name': 'Aidan', 'avatar': 'profile_images/Aidan.png', 'bio': 'Glasgow Tigers Board members and OL captain', 'support': t0}, u2)
     up3 = populate_user_profile({'name': 'Brian', 'avatar': 'profile_images/Brian.png', 'bio': 'Leeds Gryphons fans studying at GU', 'support': t1}, u3)
