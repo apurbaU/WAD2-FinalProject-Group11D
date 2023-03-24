@@ -1,5 +1,4 @@
-{% block body_block %}
-	{% if matches or old_matches %}
+{% if matches or old_matches %}
         <div class="table-responsive">
             <table class="table" id="fixtures-table">
               <thead>
@@ -41,4 +40,3 @@
 	{% else %}
 		<p style = "color: white">No upcoming matches.</p>
 	{% endif %}
-{% endblock %}

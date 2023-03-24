@@ -29,6 +29,7 @@ def team_detail(request, *, team_name_slug):
     context_dict['supporter_count'] = (UserProfile.objects
                                        .filter(support_team=context_dict['team']).count())
     if team_name_slug == 'gutigers':
+        context_dict['upper_half'] = True
         context_dict['posts'] = Post.objects.order_by('-post_date')
         context_dict['post_id'] = -1
         context_dict['comments'] = list(map(CommentView,
