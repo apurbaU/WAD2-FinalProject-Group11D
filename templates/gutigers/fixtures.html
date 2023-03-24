@@ -23,23 +23,46 @@
                   <td class = "match-time">{{ match.date|date:'F d, Y' }}</td>
                 </tr>
                 <tr>
-                  <td class = "full_fixture">
-                    {{ match.home_team.name }} <img src="{{ match.home_team.icon.url }}" alt="{{ match.home_team.name }} icon" width="25" height="25">
-                    <span style="font-size: 1.5rem; top: 0.2rem; position: relative;">{{ match.home_score }} - {{ match.away_score }}</span>
-                    <img src="{{ match.away_team.icon.url }}" alt="{{ match.away_team.name }} icon" width="25" height="25"> {{ match.away_team.name }}
-                  </td>
+				<div class = "row">
+                  <td class="full_fixture" style="display: flex; align-items: center; justify-content: space-between;">
+					<div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
+					{{ match.home_team.name }} 
+					<img src="{{ match.home_team.icon.url }}" alt="{{ match.home_team.name }} icon" width="25" height="25">
+					</div>
+					<div class="col-md-2" style="display: flex; align-items: center; justify-content: space-between; flex-grow: 1; min-width: 3rem;">
+						<span style="font-size: 1.5rem; text-align: right;">{{ match.home_score }} - {{ match.away_score }}</span>
+					</div>
+					<div class = "col-md-4" style="display: flex; align-items: right;">
+						<img src="{{ match.away_team.icon.url }}" alt="{{ match.away_team.name }} icon" width="25" height="25">
+						{{ match.away_team.name }}
+  					</div>
+					</td>
+					</div>
                 </tr>
+				</div>
               {% endfor %}
               {% for match in matches %}
                 <tr>
                   <td class = "match-time">{{ match.date|date:'F d, Y' }}</td>
                 </tr>
                 <tr>
-                  <td class = "full_fixture">
-                    {{ match.home_team.name }} <img src="{{ match.home_team.icon.url }}" alt="{{ match.home_team.name }} icon" width="25" height="25">
-                    {{ match.date|date:'H:i' }}
-                    <img src="{{ match.away_team.icon.url }}" alt="{{ match.away_team.name }} icon" width="25" height="25"> {{ match.away_team.name }}
-                  </td>
+                  <div class = "row">
+                  <td class="full_fixture" style="display: flex; align-items: center; justify-content: space-between;">
+					<div class="col-md-4" style="display: flex; align-items: center; justify-content: flex-end;">
+					{{ match.home_team.name }} 
+					<img src="{{ match.home_team.icon.url }}" alt="{{ match.home_team.name }} icon" width="25" height="25">
+					</div>
+					<div class="col-md-2" style="display: flex; align-items: center; justify-content: space-between; flex-grow: 1; min-width: 3rem;">
+						<span style="font-size: 1.5rem; text-align: right;">{{ match.home_score }} - {{ match.away_score }}</span>
+					</div>
+					<div class = "col-md-4" style="display: flex; align-items: right;">
+						<img src="{{ match.away_team.icon.url }}" alt="{{ match.away_team.name }} icon" width="25" height="25">
+						{{ match.away_team.name }}
+  					</div>
+					</td>
+					</div>
+                </tr>
+				</div>
                 </tr>
               {% endfor %}
               </tbody>
