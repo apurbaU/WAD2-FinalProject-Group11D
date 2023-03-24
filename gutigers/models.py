@@ -9,21 +9,7 @@ class Team(models.Model):
     name = models.CharField(max_length=128)
     icon = models.ImageField(upload_to='team_profile_images')
     bio = models.CharField(max_length=4096)
-<<<<<<< HEAD
-    played = models.PositiveIntegerField(default=0)
-    won = models.PositiveIntegerField(default=0)
-    drawn = models.PositiveIntegerField(default=0)
-    lost = models.PositiveIntegerField(default=0)
-    goals_for = models.PositiveIntegerField(default=0)
-    goals_against = models.PositiveIntegerField(default=0)
-    points = models.FloatField(default=0)
 
-    @property
-    def goal_difference(self):
-        return self.goals_for - self.goals_against
-
-=======
->>>>>>> 0f617595b115fad282730db9156486d025ae70a9
 
 
     def save(self, *args, **kwargs):

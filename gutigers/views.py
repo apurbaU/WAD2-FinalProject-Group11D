@@ -16,7 +16,7 @@ def index(request):
     teams = map(lambda t: TeamMatchDataView(t), Team.objects.all())
     matches = Match.objects.filter(date__gt=timezone.now()).order_by('date')
     teams = sorted(teams, key=lambda t: (-(t.wins() - t.losses()), -t.goal_diff(), -t.goals_for()))
-    return render(request, 'gutigers/index.html', context= {'upper_half' : True, 'teams': teams, 'matches': matches})
+    return render(request, 'gutigers/index.html', context= {'upper_half' : True, 'teams': teams, 'matches': matches,'posts': Post.objects.order_by('-post_date')})
 
 def not_found(request, exception=None):
     return render(request, 'gutigers/404.html')
