@@ -26,7 +26,7 @@ class TeamMatchDataView():
         return home_scores + away_scores
     def goal_diff(self): return self.goals_for() - self.goals_against()
     def win_ratio(self):
-        return (self.wins()/self.match_count())
+        return round(self.wins()/self.match_count(), 2)
 
 
     def match_diff(self, score_diff: int):
