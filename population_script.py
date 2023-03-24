@@ -60,7 +60,7 @@ def populate():
     up1 = populate_user_profile({'name': 'Johnny', 'avatar': 'profile_images/Johnny.png', 'bio': 'QB for Glasgow Tigers', 'support': t0}, u1)
     up2 = populate_user_profile({'name': 'Aidan', 'avatar': 'profile_images/Aidan.png', 'bio': 'Glasgow Tigers Board members and OL captain', 'support': t0}, u2)
     up3 = populate_user_profile({'name': 'Brian', 'avatar': 'profile_images/Brian.png', 'bio': 'Leeds Gryphons fans studying at GU', 'support': t1}, u3)
-    up4 = populate_user_profile({'name': 'Charlie', 'avatar': 'team_profile_images/GUTigers.jpg', 'bio': "Manager of the GUTigers", 'work': t0}, u4)
+    up4 = populate_user_profile({'name': 'Charlie', 'avatar': 'profile_images/GUTigers.jpg', 'bio': "Manager of the GUTigers", 'work': t0}, u4)
     man1 = populate_manager('President', up4, [t0])
 
     p1 = populate_post(1, "Tigers Lose in Last 16", "On sunday the GUTigers lost in an exciting game away from home against the NTU Renegades 24-9. After a early 2 touchdowns form NTU tigers got their own back and looked to be coming into the game until some poor performances on special teams allowed NTU to return a punt and put the game to bed", date(2023,2,27))

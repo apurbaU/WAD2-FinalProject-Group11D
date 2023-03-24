@@ -16,7 +16,7 @@ def index(request):
     teams = map(lambda t: TeamMatchDataView(t), Team.objects.all())
     matches = Match.objects.filter(date__gt=timezone.now()).order_by('date')
     old_matches = Match.objects.filter(date__lt=timezone.now()).order_by('date')
-    teams = sorted(teams, key=lambda t: (-(t.wins() - t.losses()), -t.goal_diff(), -t.goals_for()))
+    teams = sorted(teams, key=lambda t: (-t.win_ratio(), -t.goal_diff(), -t.goals_for()))
     return render(request, 'gutigers/index.html', context= {'upper_half' : True, 'teams': teams, 'matches': matches, 'old_matches': old_matches, 'posts': Post.objects.order_by('-post_date')})
 
 def not_found(request, exception=None):
@@ -114,7 +114,7 @@ def user(request, *, username_slug):
 
 def league_table(request):
     teams = list(map(lambda t: TeamMatchDataView(t), Team.objects.all()))
-    teams = sorted(teams, key=lambda t: (-(t.wins() - t.losses()), -t.goal_diff(), -t.goals_for()))
+    teams = sorted(teams, key=lambda t: (-t.win_ratio(), -t.goal_diff(), -t.goals_for()))
     print(teams)
     return render(request, 'gutigers/league_table.html', {'teams': teams})
 
