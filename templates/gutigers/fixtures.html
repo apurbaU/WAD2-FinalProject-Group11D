@@ -53,7 +53,7 @@
 					<img src="{{ match.home_team.icon.url }}" alt="{{ match.home_team.name }} icon" width="25" height="25">
 					</div>
 					<div class="col-md-2" style="display: flex; align-items: center; justify-content: space-between; flex-grow: 1; min-width: 3rem;">
-						<span style="font-size: 1.5rem; text-align: right;">{{ match.home_score }} - {{ match.away_score }}</span>
+						<span style="font-size: 1.5rem; text-align: right;">{{ match.date|date:'H : m' }}</span>
 					</div>
 					<div class = "col-md-4" style="display: flex; align-items: right;">
 						<img src="{{ match.away_team.icon.url }}" alt="{{ match.away_team.name }} icon" width="25" height="25">
