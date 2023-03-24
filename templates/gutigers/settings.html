@@ -8,9 +8,12 @@
 {% block body_block %}
 		
 		{% if is_manager %}
-		<h4>Add Result</h4>
-		<div>
-			<form id="MatchForm" method="post" action="/gutigers/settings/">
+		<div class="container">
+			<div class="card">
+		<div class="card-header"><h1 class="text-center">Add Result </h4></div>
+			<div class="card-body">
+		<div style="col-md-6">
+			<form id="user_form" method="post" action="/gutigers/settings/">
 			{% csrf_token %}
 			{% for hidden in form.hidden_fields %}
 				{{ hidden }}
@@ -24,13 +27,17 @@
 			<input type="submit" name="submit" value="Add Result" />
 		</form>
 		</div>
+	</div>
+		</div>
 		{% endif %}
 
-		<h4>Change Account Info </h4>
-		<div>
+		<div class="container">
+		<div class="card">
+		<div class="card-header"><h1 class="text-center">Change Account Info </h4></div>
+		<div class="card-body">
 
 			
-			<form id="UserForm" method="post" action="/gutigers/settings/" enctype="multipart/form-data">
+			<form id="user_form" method="post" action="/gutigers/settings/" enctype="multipart/form-data" class="card-body">
 			{% csrf_token %}
 			{% for hidden in userform.hidden_fields %}
 				{{ hidden }}
@@ -48,4 +55,6 @@
 			<input type="submit" name="submit" value="Change Details" />
 		</form>
 		</div>
+	</div>
+	</div>
 {% endblock %}
