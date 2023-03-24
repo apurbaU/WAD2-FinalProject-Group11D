@@ -9,7 +9,7 @@
               <tbody>
               {% for match in old_matches %}
                 <tr>
-                  <td class = "match-time">{{ match.time|date:'F d, Y' }}</td>
+                  <td class = "match-time">{{ match.date|date:'F d, Y' }}</td>
                 </tr>
                 <tr>
                   <td class = "full_fixture">
@@ -21,12 +21,12 @@
               {% endfor %}
               {% for match in matches %}
                 <tr>
-                  <td class = "match-time">{{ match.time|date:'F d, Y' }}</td>
+                  <td class = "match-time">{{ match.date|date:'F d, Y' }}</td>
                 </tr>
                 <tr>
                   <td class = "full_fixture">
                     {{ match.home_team.name }} <img src="{{ match.home_team.icon.url }}" alt="{{ match.home_team.name }} icon" width="25" height="25">
-                    {{ match.time|date:'H:i' }}
+                    {{ match.date|date:'H:i' }}
                     <img src="{{ match.away_team.icon.url }}" alt="{{ match.away_team.name }} icon" width="25" height="25"> {{ match.away_team.name }}
                   </td>
                 </tr>
