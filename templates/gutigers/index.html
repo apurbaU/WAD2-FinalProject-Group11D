@@ -7,32 +7,35 @@
 {% block body_block %}
 	<div class="container">
 		<div class="row">
-			<div class="col-8">
+			<div class="col-md-8">
 				<div class="left-section" style="height: auto;">{% include 'gutigers/table_only.html' %}</div>
-				<div>
-					<div class="left-section">
-						{% include 'gutigers/fixtures_only.html' %}
-			<div class="col-4">
+			</div>
+			<div class="col-md-4">
 				<div class="right-section card">
 					<h2>News Section</h2>
-					<div class="card-body" style="height: 40rem; overflow: scroll;">
+					<div class="card-body" style="max-height: 40rem; overflow-y: scroll;">
 						{% if posts %}
-						<ul>
 							{% for post in posts %}
 								<h5><a href="{% url 'gutigers:post' post.pk %}" style="text-decoration:none">{{ post.title }}</a></h5>
 								<footer class="text-muted">{{ post.post_date }}</footer>
 								<hr/>
 							{% endfor %}
-						</ul>
 						{% else %}
 							<p>No posts to show.</p>
 							<hr/>
 						{% endif %}
-						<footer class="text-center text-muted">You have reach the end of all posts!</footer>
+						<footer class="text-center text-muted">You have reached the end of all posts!</footer>
 					</div>
 				</div>
 				<span style="color: gray">© GuTigers</span>
 			</div>
-		</div>
+		</div>			
+		<div class="row">
+			<div class="col-md-8">
+				<div class="left-section">
+					{% include 'gutigers/fixtures_only.html' %}
+				</div>
+			</div>
+		</div>		
 	</div>
 {% endblock %}
