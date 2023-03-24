@@ -1,37 +1,42 @@
 {% extends 'gutigers/base.html' %}
-
 {% load staticfiles %}
-
 {% block title_block %}
-Contact
+    Contact
 {% endblock %}
 
-
 {% block body_block %}
-
-	<div type="container">
-		<div style = "text-align: center;">
-			<h1>Contact</h1>
-			<div style = "text-align: center;">
-				<img class="img-fluid" src="{% static 'images/contact.png' %}" alt="GU Tigers's icon">
-			</div>
-			<h2><br><br>Our Socials</h2>
+		<div class="position-relative" style = "min-height: 100vh">
+		<div class="image-container position-absolute top-0 start-0 end-0 bottom-0"></div>
+		<img src="{% static 'images/gutigers.jpg' %}" alt="Profile" class="position-absolute top-0 start-0 end-0 bottom-0 w-100 h-100" style = "opacity:0.2"/>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+               <div class="container" style = "background-color:white; margin-top:15rem; border: 1px solid white; border-radius:5px">
+	<h1 class="text-center">Contact Us</h1>
+	<br>
+	<div class="row justify-content-center">
+		<div class="col-md-4 text-center mb-3 mb-md-0">
+			<a href="https://www.instagram.com/gu_tigers/" class="mx-3">
+				<img src="{% static 'images/socials/iglog.png' %}" alt="Instagram Icon" style="height: 60px;">
+			</a>
+		</div>
+		<div class="col-md-4 text-center mb-3 mb-md-0">
+			<a href="https://www.facebook.com/GlasgowUniversityTigers" class="mx-3">
+				<img src="{% static 'images/socials/fblog.png' %}" alt="Facebook Icon" style="height: 60px;">
+			</a>
+		</div>
+		<div class="col-md-4 text-center">
+			<a href="https://twitter.com/gusatigers?lang=en/" class="mx-3">
+				<img src="{% static 'images/socials/twtlg.png' %}" alt="Twitter Icon" style="height: 60px;">
+			</a>
 		</div>
 	</div>
 	<br>
-	<div class="d-flex justify-content-center">
-		<a href="https://www.instagram.com/gu_tigers/" class = "mx-3">
-			<img src="{% static 'images/socials/iglog.png' %}" alt="Instagram Icon" style="height: 60px; filter: invert(100%);">
-		</a>
-		<a href="https://www.facebook.com/GlasgowUniversityTigers" class = "mx-3">
-			<img src="{% static 'images/socials/fblog.png' %}" alt="Facebook Icon" style="height: 60px;filter: invert(100%);">
-		</a>
-		<a href="https://twitter.com/gusatigers?lang=en/" class = "mx-3">
-			<img src="{% static 'images/socials/twtlg.png' %}" alt="Email Icon" style="height: 60px;filter: invert(100%);">
-		</a>
+	<div class="contact text-center">
+		<p>If you have any questions or comments, please email us at <a href="mailto:info@gutigers.com">info@gutigers.com</a>.</p>
 	</div>
+</div>
+            </div>
+        </div>
+		</div>
 
 {% endblock %}
-
-
-</doctype>

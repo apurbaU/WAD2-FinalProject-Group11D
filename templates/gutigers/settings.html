@@ -45,7 +45,7 @@
 			{% for field in userform.visible_fields %}
 				{{ field.errors }}
 				{% if field.label == "Avatar" and image %}
-				<img src={{MEDIA_URL}}{{image}} alt="Avatar"/>
+				<img class="img-fluid" width="460" height="345" src={{MEDIA_URL}}{{image}} alt="Avatar"/>
 				<br></br>
 				{% endif %}
 				{{ field.label }}
